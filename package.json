@@ -16,7 +16,8 @@
     "cf-typegen": "wrangler types",
     "typecheck": "tsc --noEmit",
     "lint": "vp check",
-    "fmt": "vp fmt"
+    "fmt": "vp fmt",
+    "og": "node scripts/build-og.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.7",

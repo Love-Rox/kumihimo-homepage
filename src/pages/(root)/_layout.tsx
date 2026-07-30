@@ -10,7 +10,7 @@ import { Document } from '../../components/Document';
  */
 export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <Document lang="ja">
+    <Document lang="ja" path="/">
       {/* Both languages, because this is the one page that has not chosen yet. */}
       <title>kumihimo — 言語を選ぶ · Choose a language</title>
       {children}

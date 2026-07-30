@@ -22,7 +22,7 @@ export default async function LocaleLayout({
   const t = COPY[lang === 'en' ? 'en' : 'ja'];
 
   return (
-    <Document lang={t.htmlLang}>
+    <Document lang={t.htmlLang} path={`/${t.htmlLang}`}>
       <title>{t.title}</title>
       <meta name="description" content={t.description} />
       <meta property="og:title" content={t.title} />
