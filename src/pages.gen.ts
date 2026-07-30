@@ -4,14 +4,14 @@
 import type { PathsForPages, GetConfigResponse, SearchCodecsForPages } from 'waku/router';
 
 // prettier-ignore
-import type { getConfig as File_LangIndex_getConfig } from './pages/[lang]/index';
+import type { getConfig as File_LocaleLangIndex_getConfig } from './pages/(locale)/[lang]/index';
 // prettier-ignore
-import type { getConfig as File_Index_getConfig } from './pages/index';
+import type { getConfig as File_RootIndex_getConfig } from './pages/(root)/index';
 
 // prettier-ignore
 type Page =
-| ({ path: '/[lang]' } & GetConfigResponse<typeof File_LangIndex_getConfig>)
-| ({ path: '/' } & GetConfigResponse<typeof File_Index_getConfig>);
+| ({ path: '/[lang]' } & GetConfigResponse<typeof File_LocaleLangIndex_getConfig>)
+| ({ path: '/' } & GetConfigResponse<typeof File_RootIndex_getConfig>);
 
 // prettier-ignore
 type Layout =
