@@ -11,6 +11,9 @@ import { COPY } from '../../../copy';
  * layout shared with the signpost would have to pick one language and apply it to both.
  * A search engine and a screen reader each read that attribute rather than guessing from
  * the text.
+ *
+ * Only `<title>` and `<meta>` may be written here — React hoists those into the head. A
+ * `<link>` written here is dropped, so the alternates live in `Document`.
  */
 export default async function LocaleLayout({
   children,
@@ -25,9 +28,6 @@ export default async function LocaleLayout({
       <meta property="og:title" content={t.title} />
       <meta property="og:description" content={t.description} />
       <meta property="og:type" content="website" />
-      <link rel="alternate" hrefLang="ja" href="/ja" />
-      <link rel="alternate" hrefLang="en" href="/en" />
-      <link rel="alternate" hrefLang="x-default" href="/ja" />
       {children}
     </Document>
   );
