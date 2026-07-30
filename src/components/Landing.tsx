@@ -1,6 +1,7 @@
 import type { Lang } from '../copy';
 import { COPY } from '../copy';
 import { Diagram } from './Diagram';
+import { Footer } from './Footer';
 import { LiveEditor } from './LiveEditor';
 import { Nav } from './Nav';
 import { Reveal } from './Reveal';
@@ -152,27 +153,7 @@ export function Landing({ lang }: { lang: Lang }) {
         </section>
       </main>
 
-      <footer className="foot">
-        <div className="shell foot__line">
-          <span className="mono">kumihimo 0.1.0</span>
-          <span className="mono">MIT</span>
-          <a className="mono" href="https://github.com/Love-Rox/kumihimo">
-            GitHub
-          </a>
-          <a className="mono" href="https://www.npmjs.com/package/@love-rox/kumihimo-core">
-            npm
-          </a>
-          <a
-            className="mono"
-            href={`https://github.com/Love-Rox/kumihimo/blob/main/docs/SPEC${lang === 'ja' ? '.ja' : ''}.md`}
-          >
-            {t.footerSpec}
-          </a>
-          <a className="mono" href={t.otherLangHref}>
-            {t.otherLangLabel}
-          </a>
-        </div>
-      </footer>
+      <Footer lang={lang} />
     </>
   );
 }

@@ -32,9 +32,6 @@ export interface Docs {
   heading: string;
   lede: string;
   tocLabel: string;
-  backLabel: string;
-  /** The label for the same page in the other language. */
-  otherLangLabel: string;
   specLabel: string;
   specHref: string;
   sections: Section[];
@@ -52,8 +49,6 @@ export const DOCS: Record<Lang, Docs> = {
     heading: '書き方',
     lede: 'ポートを宣言して、つなぐ。それだけです。下の図はすべて、左のソースを公開済みパッケージでビルド時にコンパイルした結果で、描き直したものではありません。',
     tocLabel: '目次',
-    backLabel: 'トップへ',
-    otherLangLabel: 'English',
     specLabel: '仕様書（全文）',
     specHref: SPEC_JA,
     sections: [
@@ -432,8 +427,6 @@ export const DOCS: Record<Lang, Docs> = {
     heading: 'How to write it',
     lede: 'Declare ports, then connect them. That is the whole idea. Every diagram below was compiled at build time by the published package from the source beside it — none was redrawn.',
     tocLabel: 'Contents',
-    backLabel: 'Home',
-    otherLangLabel: '日本語',
     specLabel: 'Full spec',
     specHref: SPEC_EN,
     sections: [
