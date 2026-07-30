@@ -101,7 +101,7 @@ export function Landing({ lang }: { lang: Lang }) {
             <h2>{t.editor.title}</h2>
             <p className="mono">{t.editor.lede}</p>
             <div className="band__frame">
-              <LiveEditor />
+              <LiveEditor label={t.editor.loading} />
             </div>
           </div>
         </section>

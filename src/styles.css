@@ -15,6 +15,9 @@
 @import '@fontsource/inter/500.css';
 @import '@fontsource/jetbrains-mono/400.css';
 @import '@fontsource/jetbrains-mono/500.css';
+/* The editor's own stylesheet. Its JavaScript is lazy; this is not, so the editor is
+   styled the moment its chunk lands rather than flashing unstyled. */
+@import '@love-rox/kumihimo-editor/styles.css';
 
 html,
 body {
@@ -583,6 +586,17 @@ kbd {
 
 .band .mono {
   color: var(--color-graphite-muted);
+}
+
+/* Reserve the editor's height up front so nothing below it jumps when the chunk lands. */
+.editor-slot {
+  display: grid;
+  place-items: center;
+  min-height: 32rem;
+}
+
+.editor-slot__wait {
+  color: var(--color-muted);
 }
 
 .band__frame {

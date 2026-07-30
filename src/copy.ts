@@ -48,7 +48,7 @@ export interface Copy {
     library: Note;
   };
 
-  editor: { eyebrow: string; title: string; lede: string };
+  editor: { eyebrow: string; title: string; lede: string; loading: string };
 
   install: { eyebrow: string; title: string; cliNote: string; mdNote: string };
 
@@ -126,6 +126,7 @@ export const COPY: Record<Lang, Copy> = {
       eyebrow: 'LIVE',
       title: 'ここで書けます。',
       lede: '左に書くと右に出ます。診断をクリックすると該当行へ飛びます。',
+      loading: 'エディタを読み込んでいます…',
     },
 
     install: {
@@ -217,6 +218,7 @@ export const COPY: Record<Lang, Copy> = {
       eyebrow: 'LIVE',
       title: 'Write it here.',
       lede: 'Type on the left, watch the right. Click a diagnostic to jump to the line.',
+      loading: 'Loading the editor…',
     },
 
     install: {
