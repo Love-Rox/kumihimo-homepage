@@ -1,8 +1,8 @@
 import type { PageProps } from 'waku/router';
 
-import { Landing } from '../../components/Landing';
-import type { Lang } from '../../copy';
-import { COPY } from '../../copy';
+import { Landing } from '../../../components/Landing';
+import type { Lang } from '../../../copy';
+import { COPY } from '../../../copy';
 
 const LANGS = ['ja', 'en'] as const;
 
