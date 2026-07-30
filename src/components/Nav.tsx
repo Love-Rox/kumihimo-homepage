@@ -28,6 +28,7 @@ function commandsFor(lang: Lang): Command[] {
     { group: groups.page, label: t.nav.catches, hint: 'what it catches', href: '#catches' },
     { group: groups.page, label: t.nav.playground, hint: 'playground', href: '#playground' },
     { group: groups.page, label: t.nav.editor, hint: 'live editor', href: '#editor' },
+    { group: groups.docs, label: t.nav.docs, hint: `/${lang}/docs`, href: `/${lang}/docs` },
     {
       group: groups.docs,
       label: 'SPEC (English)',
@@ -146,6 +147,9 @@ export function Nav({ lang }: { lang: Lang }) {
             </a>
             <a className="nav__link" href="#editor">
               {t.nav.editor}
+            </a>
+            <a className="nav__link" href={`/${lang}/docs`}>
+              {t.nav.docs}
             </a>
           </nav>
           <div className="nav__right">
