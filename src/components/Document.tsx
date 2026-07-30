@@ -2,6 +2,8 @@ import '../styles.css';
 
 import type { ReactNode } from 'react';
 
+import { ORIGIN } from '../site';
+
 /**
  * The document shell.
  *
@@ -14,6 +16,8 @@ import type { ReactNode } from 'react';
  * outside this `<head>` never reaches the output at all, which is why the alternates sit
  * here rather than beside the tags they belong with. They are the same three on every
  * page, so nothing is lost by centralising them.
+ *
+ * The alternates carry the full origin because a relative hreflang is not honoured.
  */
 export function Document({ lang, children }: { lang: string; children: ReactNode }) {
   return (
@@ -23,9 +27,9 @@ export function Document({ lang, children }: { lang: string; children: ReactNode
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <meta name="theme-color" content="#f9601f" />
-        <link rel="alternate" hrefLang="ja" href="/ja" />
-        <link rel="alternate" hrefLang="en" href="/en" />
-        <link rel="alternate" hrefLang="x-default" href="/ja" />
+        <link rel="alternate" hrefLang="ja" href={`${ORIGIN}/ja`} />
+        <link rel="alternate" hrefLang="en" href={`${ORIGIN}/en`} />
+        <link rel="alternate" hrefLang="x-default" href={`${ORIGIN}/ja`} />
       </head>
       <body>{children}</body>
     </html>
