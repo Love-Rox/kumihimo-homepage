@@ -1,0 +1,47 @@
+name: Deploy to Cloudflare Workers
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Only one deploy at a time; cancel in-flight runs when a newer commit lands on main.
+concurrency:
+  group: deploy-cloudflare
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: production
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v5
+
+      # Node 24 also satisfies wrangler's own requirement of >= 22.
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # `prebuild` runs `pnpm diagrams`, which compiles every .khm example with the
+      # published package and fails on any unexpected diagnostic. A site that claims to
+      # catch faulty wiring must not deploy a picture of it.
+      - run: pnpm build
+
+      # Run from the project root. `waku build` writes .wrangler/deploy/config.json
+      # pointing at dist/server/wrangler.json, and wrangler resolves it automatically.
+      # cd-ing into dist/server makes wrangler see two configs with conflicting base
+      # paths and abort.
+      - run: pnpm exec wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
