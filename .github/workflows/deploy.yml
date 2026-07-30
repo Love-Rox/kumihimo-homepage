@@ -19,6 +19,7 @@ jobs:
     timeout-minutes: 10
     environment:
       name: production
+      url: https://kumihimo.love-rox.cc
     steps:
       - uses: actions/checkout@v6
 
