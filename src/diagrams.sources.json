@@ -1,0 +1,41 @@
+{
+  "hero": [
+    "device cam \"SONY FX3\"  as camera   { out SDI : sdi }",
+    "device sw  \"ATEM Mini\" as switcher { in 1..4 : sdi  out PGM : sdi }",
+    "device rec \"HyperDeck\" as recorder { in SDI : sdi }",
+    "",
+    "cam.SDI -> sw.1    : sdi 30m \"V-01\" [color=青]",
+    "sw.PGM  -> rec.SDI : sdi 2m  \"V-10\""
+  ],
+  "ports": [
+    "device mixer \"Yamaha DM3\" as mixer {",
+    "  in  CH[1..16] : xlr",
+    "  out L, R      : xlr",
+    "  io  DANTE     : dante",
+    "}",
+    "device amp \"アンプ\" as amplifier { in IN_L, IN_R : trs }",
+    "",
+    "mixer.(L, R) -> amp.(IN_L, IN_R) : trs 3m \"A-10\""
+  ],
+  "wireless": [
+    "device mic \"ワイヤレスマイク\" as microphone { out RF : uhf }",
+    "device rx  \"受信機\"           as interface  {",
+    "  in  RF  : uhf",
+    "  out CH1 : xlr",
+    "}",
+    "device desk \"卓\" as mixer { in CH1 : xlr }",
+    "",
+    "mic.RF -> rx.RF     : uhf [ch=38]",
+    "rx.CH1 -> desk.CH1  : xlr 3m \"A-01\""
+  ],
+  "library": [
+    "model dm3 \"Yamaha DM3\" as mixer {",
+    "  in  CH[1..16] : xlr",
+    "  out L, R      : xlr",
+    "  @vendor \"Yamaha\"",
+    "}",
+    "",
+    "device foh from dm3",
+    "device mon from dm3 \"モニター卓\""
+  ]
+}

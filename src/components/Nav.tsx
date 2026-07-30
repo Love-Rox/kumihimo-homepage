@@ -1,0 +1,246 @@
+'use client';
+
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+import type { Lang } from '../copy';
+import { COPY } from '../copy';
+import { Mark } from './Mark';
+
+type Command = {
+  group: string;
+  label: string;
+  hint: string;
+  href: string;
+};
+
+/** What the palette can reach. Real destinations only — no placeholder rows. */
+function commandsFor(lang: Lang): Command[] {
+  const t = COPY[lang];
+  const ja = lang === 'ja';
+  const groups = {
+    page: ja ? 'ページ内' : 'On this page',
+    docs: ja ? 'ドキュメント' : 'Docs',
+    links: ja ? 'リンク' : 'Links',
+    lang: ja ? '言語' : 'Language',
+  };
+
+  return [
+    { group: groups.page, label: t.nav.catches, hint: 'what it catches', href: '#catches' },
+    { group: groups.page, label: t.nav.playground, hint: 'playground', href: '#playground' },
+    { group: groups.page, label: t.nav.editor, hint: 'live editor', href: '#editor' },
+    {
+      group: groups.docs,
+      label: 'SPEC (English)',
+      hint: 'docs/SPEC.md',
+      href: 'https://github.com/Love-Rox/kumihimo/blob/main/docs/SPEC.md',
+    },
+    {
+      group: groups.docs,
+      label: 'SPEC (日本語)',
+      hint: 'docs/SPEC.ja.md',
+      href: 'https://github.com/Love-Rox/kumihimo/blob/main/docs/SPEC.ja.md',
+    },
+    {
+      group: groups.docs,
+      label: 'Examples',
+      hint: 'examples/',
+      href: 'https://github.com/Love-Rox/kumihimo/tree/main/examples',
+    },
+    {
+      group: groups.links,
+      label: 'GitHub',
+      hint: 'Love-Rox/kumihimo',
+      href: 'https://github.com/Love-Rox/kumihimo',
+    },
+    {
+      group: groups.links,
+      label: 'npm',
+      hint: '@love-rox/kumihimo-core',
+      href: 'https://www.npmjs.com/package/@love-rox/kumihimo-core',
+    },
+    { group: groups.lang, label: t.otherLangLabel, hint: t.otherLangHref, href: t.otherLangHref },
+  ];
+}
+
+/**
+ * N13 · inline ⌘K search pill.
+ *
+ * The pill is visible for people who have never met the shortcut, and the shortcut works
+ * for people who have. Shipping the pill means shipping the keyboard model with it: Esc
+ * closes, the backdrop closes, arrows move, Enter opens, focus returns where it started.
+ */
+export function Nav({ lang }: { lang: Lang }) {
+  const t = COPY[lang];
+  const ja = lang === 'ja';
+  const commands = commandsFor(lang);
+
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const [active, setActive] = useState(0);
+  const input = useRef<HTMLInputElement>(null);
+  const opener = useRef<HTMLElement | null>(null);
+
+  const matches = commands.filter((c) =>
+    `${c.label} ${c.hint} ${c.group}`.toLowerCase().includes(query.toLowerCase()),
+  );
+
+  const close = useCallback(() => {
+    setOpen(false);
+    setQuery('');
+    setActive(0);
+    // Send focus back where it came from rather than dropping it on the body.
+    opener.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        opener.current = document.activeElement as HTMLElement;
+        setOpen((was) => !was);
+      }
+      if (event.key === 'Escape') close();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [close]);
+
+  useEffect(() => {
+    if (!open) {
+      document.body.style.removeProperty('overflow');
+      return;
+    }
+    document.body.style.overflow = 'hidden';
+    input.current?.focus();
+  }, [open]);
+
+  const go = useCallback(
+    (command: Command | undefined) => {
+      if (!command) return;
+      close();
+      if (command.href.startsWith('#')) {
+        document.querySelector(command.href)?.scrollIntoView({ behavior: 'smooth' });
+      } else if (command.href.startsWith('/')) {
+        window.location.href = command.href;
+      } else {
+        window.open(command.href, '_blank', 'noopener,noreferrer');
+      }
+    },
+    [close],
+  );
+
+  return (
+    <>
+      <header className="nav">
+        <div className="shell nav__inner">
+          <a className="nav__brand" href={`/${lang}`}>
+            <Mark />
+            kumihimo
+          </a>
+          <nav className="nav__links">
+            <a className="nav__link" href="#catches">
+              {t.nav.catches}
+            </a>
+            <a className="nav__link" href="#playground">
+              {t.nav.playground}
+            </a>
+            <a className="nav__link" href="#editor">
+              {t.nav.editor}
+            </a>
+          </nav>
+          <div className="nav__right">
+            <a className="nav__link" href={t.otherLangHref}>
+              {t.otherLangLabel}
+            </a>
+            <button
+              type="button"
+              className="searchpill"
+              aria-label={`${t.nav.search} (⌘K)`}
+              onClick={(event) => {
+                opener.current = event.currentTarget;
+                setOpen(true);
+              }}
+            >
+              <span className="searchpill__text">{t.nav.search}</span>
+              <span>
+                <kbd>⌘</kbd> <kbd>K</kbd>
+              </span>
+            </button>
+            <a
+              className="btn btn--accent"
+              href="https://github.com/Love-Rox/kumihimo"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <div className="cmdk" data-open={open} aria-hidden={!open}>
+        <div className="cmdk__backdrop" onClick={close} />
+        <div className="cmdk__panel" role="dialog" aria-modal="true" aria-label={t.nav.search}>
+          <div className="cmdk__field">
+            <input
+              ref={input}
+              value={query}
+              placeholder={t.nav.search}
+              onChange={(event) => {
+                setQuery(event.target.value);
+                setActive(0);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === 'ArrowDown') {
+                  event.preventDefault();
+                  setActive((i) => Math.min(i + 1, matches.length - 1));
+                }
+                if (event.key === 'ArrowUp') {
+                  event.preventDefault();
+                  setActive((i) => Math.max(i - 1, 0));
+                }
+                if (event.key === 'Enter') {
+                  event.preventDefault();
+                  go(matches[active]);
+                }
+              }}
+            />
+            <kbd>esc</kbd>
+          </div>
+
+          <div className="cmdk__results">
+            {matches.length === 0 ? (
+              <p className="cmdk__empty">{ja ? '一致するものがありません' : 'No matches'}</p>
+            ) : (
+              matches.map((command, i) => (
+                <button
+                  key={command.href}
+                  type="button"
+                  className="cmdk__item"
+                  data-active={i === active}
+                  onMouseEnter={() => setActive(i)}
+                  onClick={() => go(command)}
+                >
+                  {command.label}
+                  <span>{command.hint}</span>
+                </button>
+              ))
+            )}
+          </div>
+
+          <div className="cmdk__foot">
+            <span className="mono">
+              <kbd>↑</kbd> <kbd>↓</kbd> {ja ? '移動' : 'move'}
+            </span>
+            <span className="mono">
+              <kbd>↵</kbd> {ja ? '開く' : 'open'}
+            </span>
+            <span className="mono">
+              <kbd>esc</kbd> {ja ? '閉じる' : 'close'}
+            </span>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

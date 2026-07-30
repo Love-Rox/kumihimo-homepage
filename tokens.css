@@ -1,0 +1,98 @@
+/* Hallmark · genre: modern-minimal · theme: Cobalt
+ * paper band: cool light (L 98.5%, hue 250) · display: grotesk-sans · accent: electric cobalt (256°)
+ *
+ * Portable token layer. Every colour and every font-family in the site references a name
+ * from this file — no inline OKLCH, no bare font stacks. Lift new values in here first.
+ */
+
+:root {
+  /* ── Paper and ink ──────────────────────────────────────────────────────
+     Cool engineered near-white, never #fff. Ink is cool charcoal, never #000. */
+  --color-paper: oklch(98.5% 0.004 250);
+  --color-paper-2: oklch(96.6% 0.005 252);
+  --color-paper-3: oklch(94.2% 0.006 252);
+  --color-ink: oklch(24% 0.02 258);
+  --color-body: oklch(34% 0.018 257);
+  --color-muted: oklch(52% 0.014 256);
+
+  /* Hairlines do the structural work; there are no boxed cards and no shadows
+     beyond a single barely-there lift on the code surface. */
+  --color-rule: oklch(90.5% 0.006 252);
+  --color-rule-2: oklch(84% 0.008 254);
+
+  /* ── Signal ─────────────────────────────────────────────────────────────
+     One electric cobalt, kept under 5% of any viewport: the eyebrow tick, one
+     button, focus rings, link underlines, the status chip. Never a flood. */
+  --color-accent: oklch(58% 0.2 256);
+  --color-accent-hover: oklch(52% 0.2 256);
+  --color-accent-soft: oklch(58% 0.2 256 / 0.1);
+  --color-focus: oklch(58% 0.2 256);
+
+  /* ── The one dark band ──────────────────────────────────────────────────
+     Cobalt is a light theme with a single graphite beat, not a dark theme. */
+  --color-graphite: oklch(22% 0.016 260);
+  --color-graphite-2: oklch(27% 0.016 260);
+  --color-graphite-ink: oklch(93% 0.008 250);
+  --color-graphite-muted: oklch(68% 0.014 254);
+  --color-graphite-rule: oklch(34% 0.014 258);
+
+  /* ── Diagnostics ────────────────────────────────────────────────────────
+     The site quotes real compiler output, so it needs the severity colours. */
+  --color-warn: oklch(62% 0.14 75);
+  --color-error: oklch(58% 0.19 25);
+  --color-ok: oklch(58% 0.13 155);
+
+  /* ── Type ───────────────────────────────────────────────────────────────
+     All-sans. Space Grotesk carries the display voice — slightly mechanical,
+     which is the point on a page about drawings. Mono is the machine readout. */
+  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Inter', ui-sans-serif, system-ui, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.0625rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.9rem;
+  --text-4xl: 2.4rem;
+  --text-display-s: clamp(2rem, 3.2vw + 1rem, 3.1rem);
+  --text-display: clamp(2.4rem, 4.6vw + 0.6rem, 4.4rem);
+
+  --tracking-display: -0.03em;
+  --tracking-mono: 0.06em;
+  --leading-tight: 1.14;
+  --leading-body: 1.75;
+
+  /* ── Space · 4pt scale ──────────────────────────────────────────────── */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 9rem;
+
+  /* ── Radii · drawn with a ruler, not softened into pills ─────────────── */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-pill: 999px;
+
+  --rule-hair: 1px;
+
+  /* ── Motion ─────────────────────────────────────────────────────────────
+     Three named easings; the browser default `ease` is never used. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 150ms;
+  --dur-mid: 240ms;
+  --dur-slow: 600ms;
+
+  --measure: 34rem;
+  --shell: 76rem;
+}

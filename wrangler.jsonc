@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kumihimo-homepage",
+  "main": "./src/waku.server",
+  // nodejs_als: Waku's server-side request context uses AsyncLocalStorage.
+  "compatibility_flags": ["nodejs_als", "nodejs_compat"],
+  "compatibility_date": "2025-11-17",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist/public",
+    "html_handling": "drop-trailing-slash"
+  },
+  "rules": [{ "type": "ESModule", "globs": ["**/*.js", "**/*.mjs"] }],
+  "no_bundle": true
+}

@@ -1,0 +1,706 @@
+/* Hallmark · pre-emit critique: P5 H5 E4 S5 R5 V4
+ * genre: modern-minimal · macrostructure: Component Playground · theme: Cobalt
+ * nav: N13 inline ⌘K pill · footer: Ft2 inline single line · enrichment: none
+ *
+ * No re-drawn chrome: the code surfaces carry a mono filename label, not a fake window
+ * bar with traffic-light dots. Cobalt's signature 4 asks for the dots; the universal
+ * discipline forbids them, and universal wins.
+ */
+
+@import 'tailwindcss';
+@import '../tokens.css';
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/600.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
+html,
+body {
+  /* clip, never hidden — hidden breaks position: sticky in the nav */
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-body);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-accent-soft);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-style: normal; /* display is always roman */
+  color: var(--color-ink);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-tight);
+  /* long compound words must break rather than overflow on a 320px screen */
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.shell {
+  width: min(var(--shell), calc(100vw - 2 * var(--space-lg)));
+  margin-inline: auto;
+}
+
+/* ── Mono readout voice ─────────────────────────────────────────────────── */
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--color-accent);
+  border-radius: 1px;
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  /* nowrap: a wrapped button label is the most common mobile tell */
+  white-space: nowrap;
+  height: 40px;
+  padding-inline: var(--space-md);
+  border: var(--rule-hair) solid var(--color-rule-2);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.btn--accent {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-paper);
+}
+
+.btn--accent:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  color: var(--color-paper);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+  transform: none;
+}
+
+/* ── Nav · N13 inline ⌘K pill ───────────────────────────────────────────── */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in oklab, var(--color-paper) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: var(--rule-hair) solid var(--color-rule);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  height: 60px;
+}
+
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  color: var(--color-ink);
+  letter-spacing: -0.02em;
+}
+
+/* The one vermilion object on the page. Kept small and left of everything so it never
+   sits beside the cobalt button — two saturated colours in one glance read as a mistake. */
+.mark {
+  flex: none;
+  border-radius: 5px;
+}
+
+.nav__links {
+  display: flex;
+  gap: var(--space-lg);
+  margin-inline-start: var(--space-md);
+}
+
+.nav__link {
+  position: relative;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-mid) var(--ease-out);
+}
+
+.nav__link:hover {
+  color: var(--color-ink);
+}
+
+.nav__link:hover::after {
+  transform: scaleX(1);
+}
+
+.nav__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-inline-start: auto;
+}
+
+.searchpill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  height: 36px;
+  padding: 0 var(--space-xs) 0 var(--space-sm);
+  background: var(--color-paper-2);
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-md);
+  color: var(--color-muted);
+  font: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.searchpill:hover {
+  border-color: var(--color-accent);
+}
+
+kbd {
+  display: inline-block;
+  min-width: 18px;
+  padding: 1px 4px;
+  border: var(--rule-hair) solid var(--color-rule-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+/* ── Command palette ────────────────────────────────────────────────────── */
+
+.cmdk {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--dur-mid) var(--ease-out),
+    visibility var(--dur-mid);
+}
+
+.cmdk[data-open='true'] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cmdk__backdrop {
+  position: absolute;
+  inset: 0;
+  background: oklch(24% 0.02 258 / 0.32);
+}
+
+.cmdk__panel {
+  position: absolute;
+  top: 12vh;
+  left: 50%;
+  width: min(560px, calc(100vw - 2rem));
+  transform: translateX(-50%) translateY(-6px);
+  background: var(--color-paper);
+  border: var(--rule-hair) solid var(--color-rule-2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform var(--dur-mid) var(--ease-out);
+}
+
+.cmdk[data-open='true'] .cmdk__panel {
+  transform: translateX(-50%) translateY(0);
+}
+
+.cmdk__field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: var(--rule-hair) solid var(--color-rule);
+}
+
+.cmdk__field input {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: var(--color-ink);
+  font: inherit;
+  outline: none;
+}
+
+.cmdk__results {
+  max-height: 46vh;
+  overflow-y: auto;
+  padding: var(--space-xs);
+}
+
+.cmdk__group {
+  padding: var(--space-xs) var(--space-sm);
+  margin: 0;
+}
+
+.cmdk__item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: var(--space-xs) var(--space-sm);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: var(--text-sm);
+  text-align: left;
+  cursor: pointer;
+}
+
+.cmdk__item[data-active='true'] {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.cmdk__item span {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+.cmdk__empty {
+  padding: var(--space-md);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+.cmdk__foot {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-xs) var(--space-md);
+  border-top: var(--rule-hair) solid var(--color-rule);
+}
+
+/* ── Sections ───────────────────────────────────────────────────────────── */
+
+.section {
+  padding-block: var(--space-3xl);
+  border-top: var(--rule-hair) solid var(--color-rule);
+}
+
+.section__head {
+  display: grid;
+  gap: var(--space-sm);
+  max-width: var(--measure);
+  margin-bottom: var(--space-xl);
+}
+
+.section__head h2 {
+  font-size: var(--text-3xl);
+}
+
+/* ── Hero ───────────────────────────────────────────────────────────────── */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: var(--space-2xl);
+  align-items: start;
+  padding-block: var(--space-4xl) var(--space-3xl);
+}
+
+.hero__title {
+  font-size: var(--text-display);
+  margin-block: var(--space-md) var(--space-lg);
+  /* Japanese display type otherwise breaks mid-word — 「テキ / ストで」 reads badly.
+     auto-phrase breaks on phrase boundaries; overflow-wrap goes back to normal so the
+     global `anywhere` rule for long compound words does not undo it. */
+  word-break: auto-phrase;
+  overflow-wrap: normal;
+}
+
+.play__stack {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.hero__lede {
+  max-width: 30rem;
+  font-size: var(--text-lg);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-xl);
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: var(--rule-hair) solid var(--color-rule);
+}
+
+/* ── Code surface ───────────────────────────────────────────────────────── */
+
+.slab {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.slab__label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.code {
+  margin: 0;
+  padding: var(--space-md);
+  background: var(--color-graphite);
+  border: var(--rule-hair) solid var(--color-graphite-rule);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 2px oklch(24% 0.02 258 / 0.16);
+  color: var(--color-graphite-ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  overflow-x: auto;
+  tab-size: 2;
+}
+
+.code .k {
+  color: oklch(72% 0.14 256);
+}
+.code .s {
+  color: oklch(84% 0.05 250);
+}
+.code .c {
+  color: var(--color-graphite-muted);
+}
+.code .n {
+  color: oklch(78% 0.1 155);
+}
+
+.preview {
+  padding: var(--space-md);
+  background: var(--color-paper);
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+}
+
+.preview svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: 2px var(--space-xs);
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper-2);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tracking-mono);
+  color: var(--color-muted);
+}
+
+.chip--ok {
+  color: var(--color-ok);
+  border-color: color-mix(in oklab, var(--color-ok) 40%, var(--color-rule));
+}
+
+/* ── Diagnostics quote ──────────────────────────────────────────────────── */
+
+.diag {
+  display: grid;
+  gap: 0;
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.diag__row {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border-bottom: var(--rule-hair) solid var(--color-rule);
+  background: var(--color-paper);
+}
+
+.diag__row:last-child {
+  border-bottom: 0;
+}
+
+.diag__wire {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.diag__why {
+  font-size: var(--text-sm);
+  color: var(--color-body);
+}
+
+.diag__sev {
+  color: var(--color-warn);
+}
+
+/* ── Playground grid ────────────────────────────────────────────────────── */
+
+.play {
+  display: grid;
+  gap: var(--space-2xl);
+}
+
+.play__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.play__note {
+  max-width: var(--measure);
+  margin-bottom: var(--space-md);
+}
+
+.play__note h3 {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-xs);
+}
+
+/* ── The one dark band ──────────────────────────────────────────────────── */
+
+.band {
+  background: var(--color-graphite);
+  color: var(--color-graphite-ink);
+  border-top: var(--rule-hair) solid var(--color-graphite-rule);
+  padding-block: var(--space-3xl);
+}
+
+.band h2 {
+  color: var(--color-graphite-ink);
+}
+
+.band .mono {
+  color: var(--color-graphite-muted);
+}
+
+.band__frame {
+  margin-top: var(--space-xl);
+  border: var(--rule-hair) solid var(--color-graphite-rule);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-paper);
+}
+
+/* ── Packages ───────────────────────────────────────────────────────────── */
+
+.pkgs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  gap: 0;
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.pkg {
+  display: grid;
+  gap: var(--space-2xs);
+  padding: var(--space-md);
+  border-inline-end: var(--rule-hair) solid var(--color-rule);
+  border-block-end: var(--rule-hair) solid var(--color-rule);
+}
+
+.pkg__name {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink);
+  overflow-wrap: anywhere;
+}
+
+.pkg__what {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+/* ── Footer · Ft2 inline single line ────────────────────────────────────── */
+
+.foot {
+  padding-block: var(--space-lg);
+  border-top: var(--rule-hair) solid var(--color-rule);
+}
+
+.foot__line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: baseline;
+}
+
+.foot__line a:hover {
+  color: var(--color-accent);
+}
+
+/* ── Reveal ─────────────────────────────────────────────────────────────── */
+
+/* Scroll-driven, CSS-only, and additive: the content is visible by default and the
+   animation is layered on only where the browser supports it. Nothing here can leave the
+   page blank if a script fails. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 42%;
+    }
+  }
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (width < 60rem) {
+  .hero,
+  .play__row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero {
+    padding-block: var(--space-2xl) var(--space-xl);
+  }
+
+  .section {
+    padding-block: var(--space-2xl);
+  }
+}
+
+@media (width < 40rem) {
+  .nav__links {
+    display: none;
+  }
+
+  .searchpill__text {
+    display: none;
+  }
+
+  .diag__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-xs);
+  }
+
+  .diag__wire {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}

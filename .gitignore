@@ -1,0 +1,11 @@
+node_modules
+dist
+.wrangler
+.DS_Store
+*.log
+.idea
+.vscode
+
+# Generated from src/diagrams.sources.json by scripts/build-diagrams.mjs.
+# Committing it would mean two sources of truth for the same drawings.
+src/generated

@@ -1,0 +1,41 @@
+{
+  "name": "kumihimo-homepage",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Product site for kumihimo — text-based AV signal flow diagrams",
+  "type": "module",
+  "scripts": {
+    "diagrams": "node scripts/build-diagrams.mjs",
+    "predev": "pnpm diagrams",
+    "dev": "waku dev",
+    "prebuild": "pnpm diagrams",
+    "build": "waku build",
+    "start": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "cf-typegen": "wrangler types",
+    "lint": "vp check",
+    "fmt": "vp fmt"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.2.7",
+    "@fontsource/jetbrains-mono": "^5.2.8",
+    "@fontsource/space-grotesk": "^5.2.8",
+    "@love-rox/kumihimo-core": "^0.1.0",
+    "@love-rox/kumihimo-editor": "^0.1.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-server-dom-webpack": "^19.2.5",
+    "waku": "^1.0.0-beta.0",
+    "wrangler": "^4.87.0"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.35.0",
+    "@tailwindcss/vite": "^4.2.4",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "tailwindcss": "^4.2.4",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.10",
+    "vite-plus": "^0.1.20"
+  }
+}
