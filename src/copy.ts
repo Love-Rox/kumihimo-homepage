@@ -25,7 +25,7 @@ export interface Copy {
   otherLangHref: string;
   otherLangLabel: string;
 
-  nav: { catches: string; playground: string; editor: string; search: string };
+  nav: { catches: string; playground: string; docs: string; editor: string; search: string };
 
   hero: {
     eyebrow: string;
@@ -73,7 +73,13 @@ export const COPY: Record<Lang, Copy> = {
     otherLangHref: '/en',
     otherLangLabel: 'English',
 
-    nav: { catches: '検出できるもの', playground: '書き方', editor: '試す', search: '検索・移動' },
+    nav: {
+      catches: '検出できるもの',
+      playground: '書き方',
+      docs: 'ドキュメント',
+      editor: '試す',
+      search: '検索・移動',
+    },
 
     hero: {
       eyebrow: 'AV SIGNAL FLOW · 系統図',
@@ -153,10 +159,16 @@ export const COPY: Record<Lang, Copy> = {
     title: 'kumihimo — AV signal flow diagrams, written as text.',
     description:
       'Write AV signal flow diagrams as text and get SVG. Connections are port to port, and the wiring that plugs in perfectly and carries nothing gets flagged before anyone reaches site.',
-    otherLangHref: '/',
+    otherLangHref: '/ja',
     otherLangLabel: '日本語',
 
-    nav: { catches: 'What it catches', playground: 'How it reads', editor: 'Try it', search: 'Search' },
+    nav: {
+      catches: 'What it catches',
+      playground: 'How it reads',
+      docs: 'Docs',
+      editor: 'Try it',
+      search: 'Search',
+    },
 
     hero: {
       eyebrow: 'AV SIGNAL FLOW · 系統図',

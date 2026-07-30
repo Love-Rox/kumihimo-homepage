@@ -37,5 +37,66 @@
     "",
     "device foh from dm3",
     "device mon from dm3 \"モニター卓\""
+  ],
+
+  "docsFirst": [
+    "device pc  \"ノートPC\"  as computer { out HDMI : hdmi }",
+    "device mon \"モニター\" as display  { in  HDMI : hdmi }",
+    "",
+    "pc.HDMI -> mon.HDMI : hdmi 5m \"V-01\""
+  ],
+  "docsConnect": [
+    "device mixer \"卓\"       as mixer     { out L, R : xlr  io DANTE : dante }",
+    "device amp   \"アンプ\"   as amplifier { in  IN_L, IN_R : trs  in AC : ac }",
+    "device netsw \"スイッチ\" as router    { io  1 : dante }",
+    "device pdu   \"電源\"     as generic   { out 1 : ac }",
+    "",
+    "mixer.(L, R) -> amp.(IN_L, IN_R) : trs   3m  \"A-10\" [color=青]",
+    "mixer.DANTE <-> netsw.1          : dante 10m \"N-01\"",
+    "pdu.1        -- amp.AC           : ac    2m"
+  ],
+  "docsGroup": [
+    "diagram \"会場\" { direction: LR }",
+    "",
+    "group stage \"ステージ\" {",
+    "  device cam1 \"FX3\"  as camera     { out SDI : sdi }",
+    "  device mic1 \"SM58\" as microphone { out OUT : xlr }",
+    "}",
+    "",
+    "group rack \"ラック\" {",
+    "  device sw    \"ATEM\" as switcher { in 1..2      : sdi  out PGM  : sdi }",
+    "  device mixer \"DM3\"  as mixer    { in CH[1..2]  : xlr  out L, R : xlr }",
+    "}",
+    "",
+    "cam1.SDI -> sw.1      : sdi 30m \"V-01\"",
+    "mic1.OUT -> mixer.CH1 : xlr 20m \"A-01\""
+  ],
+  "docsVia": [
+    "device pc  \"PC\"       as computer { out HDMI : hdmi }",
+    "device mon \"モニター\" as display  { in  DVI  : dvi }",
+    "",
+    "pc.HDMI -> mon.DVI : hdmi 2m \"V-01\" via \"HDMI-DVI変換ケーブル\""
+  ],
+  "docsFaults": {
+    "lines": [
+      "device ext   \"HDBaseT受信器\"       as interface { out CAT : hdbaset }",
+      "device netsw \"L2スイッチ\"           as router    { in  1   : lan }",
+      "device cam   \"カメラ\"               as camera    { out SDI : sdi }",
+      "device fs    \"フレームシンクロナイザ\" as generic   { in  REF : genlock }",
+      "",
+      "ext.CAT -> netsw.1 : hdbaset 20m \"N-01\"",
+      "cam.SDI -> fs.REF  : sdi     5m  \"V-90\""
+    ],
+    "expect": 2
+  },
+  "docsTheme": [
+    "diagram \"白黒印刷用\" { theme: mono }",
+    "",
+    "device cam \"カメラ\"       as camera   { out SDI : sdi }",
+    "device sw  \"スイッチャー\" as switcher { in 1 : sdi  out PGM : sdi }",
+    "device rec \"レコーダー\"   as recorder { in SDI : sdi }",
+    "",
+    "cam.SDI -> sw.1    : sdi 30m \"V-01\" [color=青]",
+    "sw.PGM  -> rec.SDI : sdi 2m  \"V-10\""
   ]
 }
