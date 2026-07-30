@@ -13,10 +13,16 @@ type Command = {
   href: string;
 };
 
-/** What the palette can reach. Real destinations only — no placeholder rows. */
-function commandsFor(lang: Lang): Command[] {
+/**
+ * What the palette can reach. Real destinations only — no placeholder rows.
+ *
+ * The section links carry the landing page's path rather than a bare `#catches`, because
+ * the same nav is rendered on the docs pages, where a bare fragment points at nothing.
+ */
+function commandsFor(lang: Lang, otherHref: string): Command[] {
   const t = COPY[lang];
   const ja = lang === 'ja';
+  const home = `/${lang}`;
   const groups = {
     page: ja ? 'ページ内' : 'On this page',
     docs: ja ? 'ドキュメント' : 'Docs',
@@ -25,10 +31,15 @@ function commandsFor(lang: Lang): Command[] {
   };
 
   return [
-    { group: groups.page, label: t.nav.catches, hint: 'what it catches', href: '#catches' },
-    { group: groups.page, label: t.nav.playground, hint: 'playground', href: '#playground' },
-    { group: groups.page, label: t.nav.editor, hint: 'live editor', href: '#editor' },
-    { group: groups.docs, label: t.nav.docs, hint: `/${lang}/docs`, href: `/${lang}/docs` },
+    { group: groups.page, label: t.nav.catches, hint: 'what it catches', href: `${home}#catches` },
+    {
+      group: groups.page,
+      label: t.nav.playground,
+      hint: 'playground',
+      href: `${home}#playground`,
+    },
+    { group: groups.page, label: t.nav.editor, hint: 'live editor', href: `${home}#editor` },
+    { group: groups.docs, label: t.nav.docs, hint: `${home}/docs`, href: `${home}/docs` },
     {
       group: groups.docs,
       label: 'SPEC (English)',
@@ -59,7 +70,7 @@ function commandsFor(lang: Lang): Command[] {
       hint: '@love-rox/kumihimo-core',
       href: 'https://www.npmjs.com/package/@love-rox/kumihimo-core',
     },
-    { group: groups.lang, label: t.otherLangLabel, hint: t.otherLangHref, href: t.otherLangHref },
+    { group: groups.lang, label: t.otherLangLabel, hint: otherHref, href: otherHref },
   ];
 }
 
@@ -70,10 +81,22 @@ function commandsFor(lang: Lang): Command[] {
  * for people who have. Shipping the pill means shipping the keyboard model with it: Esc
  * closes, the backdrop closes, arrows move, Enter opens, focus returns where it started.
  */
-export function Nav({ lang }: { lang: Lang }) {
+export function Nav({
+  lang,
+  otherHref,
+}: {
+  lang: Lang;
+  /**
+   * Where the language switch goes. Defaults to the other language's landing page; the
+   * docs pass their own counterpart, because dropping someone on a front door after a
+   * language switch costs more than the switch saves.
+   */
+  otherHref?: string;
+}) {
   const t = COPY[lang];
   const ja = lang === 'ja';
-  const commands = commandsFor(lang);
+  const other = otherHref ?? t.otherLangHref;
+  const commands = commandsFor(lang, other);
 
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
@@ -119,8 +142,10 @@ export function Nav({ lang }: { lang: Lang }) {
     (command: Command | undefined) => {
       if (!command) return;
       close();
-      if (command.href.startsWith('#')) {
-        document.querySelector(command.href)?.scrollIntoView({ behavior: 'smooth' });
+      const [path, hash] = command.href.split('#');
+      // A section link already on that page should scroll, not reload it.
+      if (hash && (path === '' || path === window.location.pathname)) {
+        document.querySelector(`#${hash}`)?.scrollIntoView({ behavior: 'smooth' });
       } else if (command.href.startsWith('/')) {
         window.location.href = command.href;
       } else {
@@ -139,13 +164,13 @@ export function Nav({ lang }: { lang: Lang }) {
             kumihimo
           </a>
           <nav className="nav__links">
-            <a className="nav__link" href="#catches">
+            <a className="nav__link" href={`/${lang}#catches`}>
               {t.nav.catches}
             </a>
-            <a className="nav__link" href="#playground">
+            <a className="nav__link" href={`/${lang}#playground`}>
               {t.nav.playground}
             </a>
-            <a className="nav__link" href="#editor">
+            <a className="nav__link" href={`/${lang}#editor`}>
               {t.nav.editor}
             </a>
             <a className="nav__link" href={`/${lang}/docs`}>
@@ -153,7 +178,7 @@ export function Nav({ lang }: { lang: Lang }) {
             </a>
           </nav>
           <div className="nav__right">
-            <a className="nav__link" href={t.otherLangHref}>
+            <a className="nav__link" href={other}>
               {t.otherLangLabel}
             </a>
             <button
