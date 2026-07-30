@@ -4,6 +4,7 @@
   "private": true,
   "description": "Product site for kumihimo — text-based AV signal flow diagrams",
   "type": "module",
+  "packageManager": "pnpm@10.33.0",
   "scripts": {
     "diagrams": "node scripts/build-diagrams.mjs",
     "predev": "pnpm diagrams",
@@ -13,6 +14,7 @@
     "start": "wrangler dev",
     "deploy": "wrangler deploy",
     "cf-typegen": "wrangler types",
+    "typecheck": "tsc --noEmit",
     "lint": "vp check",
     "fmt": "vp fmt"
   },
