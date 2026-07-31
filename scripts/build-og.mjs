@@ -55,10 +55,10 @@ const CARDS = [
  * paper and would have to be recoloured to sit on this background. It is decoration, so it
  * says nothing a reader could act on — the headline carries the claim.
  */
-function vignette() {
-  const port = (x, y, fill) =>
-    `<rect x="${x}" y="${y}" width="12" height="12" rx="3" fill="${fill}"/>`;
+const port = (x, y, fill) =>
+  `<rect x="${x}" y="${y}" width="12" height="12" rx="3" fill="${fill}"/>`;
 
+function vignette() {
   // Sits in the bottom-right, clear of the headline. The panels are opaque, so anything
   // they overlap disappears without a trace — the first draft lost the last three
   // characters of the Japanese headline exactly that way.
