@@ -6,6 +6,7 @@ import { Footer } from './Footer';
 import { Nav } from './Nav';
 import type { Block, Docs as DocsContent } from '../docs';
 import built from '../generated/diagrams.json';
+import { VOCABULARY, categories, signalsOf } from '../vocabulary';
 
 type Key = keyof typeof built;
 
@@ -74,6 +75,89 @@ function Diagnostics({ name, lang }: { name: string; lang: Lang }) {
   );
 }
 
+/** Names in the category, in the order the compiler lists them. */
+const CATEGORY_NAMES: Record<string, Record<Lang, string>> = {
+  video: { ja: '映像', en: 'Video' },
+  audio: { ja: '音声', en: 'Audio' },
+  control: { ja: '制御', en: 'Control' },
+  network: { ja: 'ネットワーク', en: 'Network' },
+  power: { ja: '電源', en: 'Power' },
+  sync: { ja: '同期', en: 'Sync' },
+  generic: { ja: '汎用', en: 'Generic' },
+};
+
+/**
+ * The accepted words for one kind of thing.
+ *
+ * Every one of these comes from the published package, so the page cannot claim a word the
+ * compiler would reject, or omit one it accepts.
+ */
+function Vocabulary({ of, lang }: { of: string; lang: Lang }) {
+  const ja = lang === 'ja';
+
+  if (of === 'signals') {
+    return (
+      <div className="vocab">
+        {categories().map((category) => (
+          <div className="vocab__group" key={category}>
+            <h4>{CATEGORY_NAMES[category]?.[lang] ?? category}</h4>
+            <div className="vocab__grid">
+              {signalsOf(category).map((signal) => (
+                <div className="vocab__item" key={signal.name}>
+                  <code className="tok">{signal.name}</code>
+                  <span className="vocab__what">{signal.label[lang]}</span>
+                  {/* A radio path has no connector, and saying so teaches more than an
+                      empty line does. The wireless flag itself is not printed: every
+                      wireless label already says it. */}
+                  <span className="vocab__conn">
+                    {signal.wireless
+                      ? ja
+                        ? 'コネクタなし'
+                        : 'no connector'
+                      : signal.connectors.join(' / ')}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (of === 'colours') {
+    return (
+      <div className="vocab__grid vocab__grid--wide">
+        {VOCABULARY.colours.map((colour) => (
+          <div className="vocab__item" key={colour.hex}>
+            <span className="vocab__swatch" style={{ background: colour.hex }} />
+            <span className="vocab__names">
+              {colour.names.map((name) => (
+                <code className="tok" key={name}>
+                  {name}
+                </code>
+              ))}
+            </span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  const words =
+    of === 'kinds' ? VOCABULARY.kinds : of === 'units' ? VOCABULARY.units : VOCABULARY.themes;
+
+  return (
+    <div className="vocab__words">
+      {words.map((word) => (
+        <code className="tok" key={word}>
+          {word}
+        </code>
+      ))}
+    </div>
+  );
+}
+
 function Piece({ block, lang }: { block: Block; lang: Lang }) {
   switch (block.kind) {
     case 'p':
@@ -100,6 +184,8 @@ function Piece({ block, lang }: { block: Block; lang: Lang }) {
     case 'diagnostics':
       return <Diagnostics name={block.name} lang={lang} />;
 
+    case 'vocabulary':
+      return <Vocabulary of={block.of} lang={lang} />;
     case 'table':
       return (
         <div className="tablewrap">

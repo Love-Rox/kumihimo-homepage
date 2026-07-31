@@ -38,6 +38,9 @@ jobs:
       # The published version and its date, read from npm and the Marketplace.
       - run: pnpm release
 
+      # The language's fixed vocabulary, read out of the compiler.
+      - run: pnpm vocabulary
+
       - run: pnpm typecheck
 
       - run: pnpm build

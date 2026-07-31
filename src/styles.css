@@ -638,6 +638,75 @@ kbd {
   color: var(--color-muted);
 }
 
+/* ── Vocabulary lists ───────────────────────────────────────────────────── */
+
+/* Reference material, so it is dense on purpose: someone is scanning for one word, not
+   reading it through. */
+.vocab {
+  display: grid;
+  gap: var(--space-lg);
+  margin-block: var(--space-md);
+}
+
+.vocab__group h4 {
+  margin-bottom: var(--space-xs);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+.vocab__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
+  gap: 0;
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.vocab__grid--wide {
+  grid-template-columns: repeat(auto-fill, minmax(min(11rem, 100%), 1fr));
+  margin-block: var(--space-md);
+}
+
+.vocab__item {
+  display: grid;
+  gap: var(--space-2xs);
+  align-content: start;
+  padding: var(--space-sm) var(--space-md);
+  border-inline-end: var(--rule-hair) solid var(--color-rule);
+  border-block-end: var(--rule-hair) solid var(--color-rule);
+}
+
+.vocab__what {
+  font-size: var(--text-sm);
+  color: var(--color-body);
+}
+
+.vocab__conn {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+}
+
+.vocab__swatch {
+  width: 100%;
+  height: 0.5rem;
+  border-radius: 999px;
+}
+
+.vocab__names {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.vocab__words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-block: var(--space-md);
+}
+
 /* ── Release line ───────────────────────────────────────────────────────── */
 
 .release {

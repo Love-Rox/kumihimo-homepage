@@ -17,6 +17,14 @@ export type Block =
   | { kind: 'diagram'; name: string; filename: string }
   | { kind: 'diagnostics'; name: string }
   | { kind: 'table'; head: string[]; rows: string[][] }
+  /**
+   * A list of accepted words, read out of the compiler at build time.
+   *
+   * Not written here on purpose. Hand-copying 47 signal types is writing the same thing
+   * twice and letting the copy rot — a type added to the language would go on being absent
+   * from the page that claims to list them.
+   */
+  | { kind: 'vocabulary'; of: 'signals' | 'kinds' | 'colours' | 'units' | 'themes' }
   | { kind: 'note'; text: string };
 
 export interface Section {
@@ -284,6 +292,36 @@ export const DOCS: Record<Lang, Docs> = {
             kind: 'note',
             text: '例外は投げません。どの段階も診断を集めて最善の結果を返すので、誤りのある図もちゃんと描かれます。**欠陥を見つけるために必要なのは、まさにその欠陥が写った絵**だからです。',
           },
+        ],
+      },
+      {
+        id: 'words',
+        title: '使える単語',
+        blocks: [
+          {
+            kind: 'p',
+            text: 'ここに出ている語は、**このページが公開済みのパッケージから読み出したもの**です。手で書き写した一覧ではないので、コンパイラが受け付けない語が載ることも、受け付ける語が抜けることもありません。VS Code の補完も同じ出どころです。',
+          },
+          { kind: 'p', text: '**信号種別** — ポートと結線の `:` の後に書きます。' },
+          { kind: 'vocabulary', of: 'signals' },
+          {
+            kind: 'note',
+            text: '一覧に無い信号は `signal` で自分で定義できます。「信号と互換判定」を参照してください。',
+          },
+          { kind: 'p', text: '**機材種別** — `device … as` の後に書きます。' },
+          { kind: 'vocabulary', of: 'kinds' },
+          {
+            kind: 'p',
+            text: '**ケーブル色** — `[color=…]` に書きます。英語と日本語のどちらでも同じ色になります。`#0af` のような16進表記も使えます。',
+          },
+          { kind: 'vocabulary', of: 'colours' },
+          {
+            kind: 'p',
+            text: '**長さの単位** — 数値に続けて書きます。`30m` `6ft` のように空白を空けません。',
+          },
+          { kind: 'vocabulary', of: 'units' },
+          { kind: 'p', text: '**テーマ** — `diagram { theme: … }` に書きます。' },
+          { kind: 'vocabulary', of: 'themes' },
         ],
       },
       {
@@ -682,6 +720,36 @@ export const DOCS: Record<Lang, Docs> = {
             kind: 'note',
             text: 'Nothing throws. Every stage collects diagnostics and returns a best-effort result, so a faulty diagram still renders — **a picture of a flawed system is exactly what an author needs in order to see the flaw**.',
           },
+        ],
+      },
+      {
+        id: 'words',
+        title: 'The vocabulary',
+        blocks: [
+          {
+            kind: 'p',
+            text: 'Every word below is **read out of the published package by this page**. It is not a list copied by hand, so it cannot offer a word the compiler would reject or omit one it accepts. The VS Code completions come from the same place.',
+          },
+          { kind: 'p', text: '**Signal types** — after the `:` on a port or a connection.' },
+          { kind: 'vocabulary', of: 'signals' },
+          {
+            kind: 'note',
+            text: 'A type that is not here can be declared with `signal`. See "Signals and compatibility".',
+          },
+          { kind: 'p', text: '**Device kinds** — after `device … as`.' },
+          { kind: 'vocabulary', of: 'kinds' },
+          {
+            kind: 'p',
+            text: '**Jacket colours** — inside `[color=…]`. English and Japanese spellings resolve to the same swatch, and a hex literal like `#0af` works too.',
+          },
+          { kind: 'vocabulary', of: 'colours' },
+          {
+            kind: 'p',
+            text: '**Length units** — written against the number, with no space: `30m`, `6ft`.',
+          },
+          { kind: 'vocabulary', of: 'units' },
+          { kind: 'p', text: '**Themes** — inside `diagram { theme: … }`.' },
+          { kind: 'vocabulary', of: 'themes' },
         ],
       },
       {
