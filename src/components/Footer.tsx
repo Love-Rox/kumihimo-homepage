@@ -1,5 +1,6 @@
 import type { Lang } from '../copy';
 import { COPY } from '../copy';
+import { RELEASE } from '../release';
 
 /**
  * Ft2 · one inline line, shared by every page.
@@ -20,7 +21,9 @@ export function Footer({
   return (
     <footer className="foot">
       <div className="shell foot__line">
-        <span className="mono">kumihimo 0.2.0</span>
+        <a className="mono" href="https://github.com/Love-Rox/kumihimo/releases">
+          kumihimo {RELEASE.npm.version} · {RELEASE.npm.date}
+        </a>
         <a className="mono" href={`/${lang}/licenses`}>
           MIT
         </a>

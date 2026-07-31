@@ -39,6 +39,7 @@ function commandsFor(lang: Lang, otherHref: string): Command[] {
       href: `${home}#playground`,
     },
     { group: groups.page, label: t.nav.editor, hint: 'live editor', href: `${home}#editor` },
+    { group: groups.page, label: t.nav.vscode, hint: 'the extension', href: `${home}#vscode` },
     { group: groups.docs, label: t.nav.docs, hint: `${home}/docs`, href: `${home}/docs` },
     {
       group: groups.docs,
@@ -178,6 +179,9 @@ export function Nav({
             </a>
             <a className="nav__link" href={`/${lang}#editor`}>
               {t.nav.editor}
+            </a>
+            <a className="nav__link" href={`/${lang}#vscode`}>
+              {t.nav.vscode}
             </a>
             <a className="nav__link" href={`/${lang}/docs`}>
               {t.nav.docs}

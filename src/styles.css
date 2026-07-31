@@ -638,6 +638,62 @@ kbd {
   color: var(--color-muted);
 }
 
+/* ── Release line ───────────────────────────────────────────────────────── */
+
+.release {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: baseline;
+  margin-top: var(--space-md);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+/* The link sat in the same colour as the version beside it, with no underline — which is
+   to say it did not read as a link at all. */
+.release a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.release a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ── Feature cells ──────────────────────────────────────────────────────── */
+
+/* The same ruled grid as .pkgs, but each cell carries a heading rather than a package
+   name, so the title is set in the body face instead of the mono one. */
+.feats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
+  gap: 0;
+  margin-top: var(--space-xl);
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.feat {
+  display: grid;
+  gap: var(--space-2xs);
+  align-content: start;
+  padding: var(--space-md);
+  border-inline-end: var(--rule-hair) solid var(--color-rule);
+  border-block-end: var(--rule-hair) solid var(--color-rule);
+}
+
+.feat h3 {
+  font-size: var(--text-base);
+}
+
+.feat p {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
 /* ── Footer · Ft2 inline single line ────────────────────────────────────── */
 
 .foot {
@@ -884,11 +940,16 @@ kbd {
   }
 }
 
-@media (width < 40rem) {
+/* The links need about 800px between the brand and the right-hand controls. Adding
+   "VS Code" to the row pushed that past what a tablet has, and a nav that overflows is
+   worse than one that hands the job to ⌘K, which reaches every section anyway. */
+@media (width < 52rem) {
   .nav__links {
     display: none;
   }
+}
 
+@media (width < 40rem) {
   .searchpill__text {
     display: none;
   }

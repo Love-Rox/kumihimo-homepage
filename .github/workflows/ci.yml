@@ -35,6 +35,9 @@ jobs:
       # them. `prebuild` covers a local build; CI type-checks first, so it has to ask.
       - run: pnpm notices
 
+      # The published version and its date, read from npm and the Marketplace.
+      - run: pnpm release
+
       - run: pnpm typecheck
 
       - run: pnpm build

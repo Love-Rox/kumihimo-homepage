@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # The published version and its date are read at build time, so a release in the other
+  # repository does not reach this site until it is rebuilt. A daily deploy means the
+  # number is wrong for at most a day rather than until someone happens to push.
+  schedule:
+    - cron: '17 21 * * *'
 
 # Only one deploy at a time; cancel in-flight runs when a newer commit lands on main.
 concurrency:
