@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "diagrams": "node scripts/build-diagrams.mjs",
-    "predev": "pnpm diagrams",
+    "predev": "pnpm diagrams && pnpm notices",
     "dev": "waku dev",
-    "prebuild": "pnpm diagrams",
+    "prebuild": "pnpm diagrams && pnpm notices",
     "build": "waku build",
     "start": "wrangler dev",
     "deploy": "wrangler deploy",
@@ -18,7 +18,8 @@
     "lint": "oxlint .",
     "lint:fix": "oxlint . --fix",
     "format": "oxfmt .",
-    "format:check": "oxfmt --check ."
+    "format:check": "oxfmt --check .",
+    "notices": "node scripts/build-notices.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.7",
