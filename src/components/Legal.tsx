@@ -4,7 +4,25 @@ import type { Lang } from '../copy';
 import { Footer } from './Footer';
 import type { Legal as LegalContent } from '../legal';
 import { Nav } from './Nav';
-import notices from '../generated/notices.json';
+import generated from '../generated/notices.json';
+
+interface Notice {
+  name: string;
+  version: string;
+  why: string;
+  spdx: string;
+  homepage: string | null;
+  text: string;
+}
+
+/**
+ * Assigned to a declared type rather than left to inference.
+ *
+ * The file is generated and not committed, so its inferred shape is whatever the last
+ * build happened to produce. Naming the shape means a change in the generator fails here,
+ * rather than quietly handing this component `any`.
+ */
+const notices: Notice[] = generated;
 
 /**
  * `code`, **bold** and [links](…) inside a sentence.
