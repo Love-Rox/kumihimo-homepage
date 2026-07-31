@@ -70,6 +70,12 @@ function commandsFor(lang: Lang, otherHref: string): Command[] {
       hint: '@love-rox/kumihimo-core',
       href: 'https://www.npmjs.com/package/@love-rox/kumihimo-core',
     },
+    {
+      group: groups.links,
+      label: 'VS Code',
+      hint: 'love-rox.kumihimo-vscode',
+      href: 'https://marketplace.visualstudio.com/items?itemName=love-rox.kumihimo-vscode',
+    },
     { group: groups.lang, label: t.otherLangLabel, hint: otherHref, href: otherHref },
   ];
 }

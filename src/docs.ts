@@ -74,6 +74,19 @@ export const DOCS: Record<Lang, Docs> = {
             kind: 'p',
             text: '`kumihimo` と `khm` の両方の名前で入ります。警告は既定ではビルドを失敗させません。失敗させたいときは `--strict` を付けます。',
           },
+          {
+            kind: 'p',
+            text: 'VS Code で書くなら拡張があります。**書きながら診断が出て、隣に図が出ます。** 判定は下の「信号と互換判定」と同じもので、コンパイラがそのまま動いています。',
+          },
+          {
+            kind: 'code',
+            filename: 'shell',
+            lines: ['code --install-extension love-rox.kumihimo-vscode'],
+          },
+          {
+            kind: 'p',
+            text: 'プレビューは `⌘K V`（Windows / Linux は `Ctrl+K V`）、またはタイトルバーのボタンです。エディタの配色に追随します。',
+          },
         ],
       },
       {
@@ -464,6 +477,19 @@ export const DOCS: Record<Lang, Docs> = {
           {
             kind: 'p',
             text: 'It installs as both `kumihimo` and `khm`. Warnings do not fail the build unless you pass `--strict`.',
+          },
+          {
+            kind: 'p',
+            text: 'There is a VS Code extension for writing it. **Diagnostics as you type, and the diagram beside the source.** The verdicts are the ones under "Signals and compatibility" below — it is the same compiler, running in the editor.',
+          },
+          {
+            kind: 'code',
+            filename: 'shell',
+            lines: ['code --install-extension love-rox.kumihimo-vscode'],
+          },
+          {
+            kind: 'p',
+            text: "The preview opens with `⌘K V` (`Ctrl+K V` on Windows and Linux) or the button in the editor title bar, and follows the editor's colour theme.",
           },
         ],
       },
