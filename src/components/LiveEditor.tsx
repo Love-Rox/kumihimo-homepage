@@ -2,6 +2,7 @@
 
 import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 
+import type { Lang } from '../copy';
 import { SAMPLE } from '../sample';
 
 /**
@@ -27,7 +28,7 @@ const Editor = lazy(async () => {
   return { default: KumihimoEditor };
 });
 
-export function LiveEditor({ label }: { label: string }) {
+export function LiveEditor({ label, lang }: { label: string; lang: Lang }) {
   const [wanted, setWanted] = useState(false);
   const slot = useRef<HTMLDivElement>(null);
 
@@ -54,7 +55,7 @@ export function LiveEditor({ label }: { label: string }) {
     <div className="editor-slot" ref={slot}>
       {wanted ? (
         <Suspense fallback={<p className="editor-slot__wait mono">{label}</p>}>
-          <Editor initialSource={SAMPLE} readUrl={false} filename="kumihimo" />
+          <Editor initialSource={SAMPLE} readUrl={false} filename="kumihimo" locale={lang} />
         </Suspense>
       ) : (
         <p className="editor-slot__wait mono">{label}</p>

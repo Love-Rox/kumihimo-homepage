@@ -58,8 +58,8 @@ function inline(text: string): ReactNode[] {
   );
 }
 
-function Diagnostics({ name }: { name: string }) {
-  const entry = built[key(name)];
+function Diagnostics({ name, lang }: { name: string; lang: Lang }) {
+  const entry = built[key(name)][lang];
 
   return (
     <ul className="diaglist">
@@ -74,7 +74,7 @@ function Diagnostics({ name }: { name: string }) {
   );
 }
 
-function Piece({ block }: { block: Block }) {
+function Piece({ block, lang }: { block: Block; lang: Lang }) {
   switch (block.kind) {
     case 'p':
       return <p className="prose">{inline(block.text)}</p>;
@@ -95,10 +95,10 @@ function Piece({ block }: { block: Block }) {
       );
 
     case 'diagram':
-      return <Diagram name={key(block.name)} filename={block.filename} layout="row" />;
+      return <Diagram name={key(block.name)} filename={block.filename} lang={lang} layout="row" />;
 
     case 'diagnostics':
-      return <Diagnostics name={block.name} />;
+      return <Diagnostics name={block.name} lang={lang} />;
 
     case 'table':
       return (
@@ -171,7 +171,7 @@ export function Docs({ t, lang }: { t: DocsContent; lang: Lang }) {
             </h2>
             {s.blocks.map((block, j) => (
               // biome-ignore lint/suspicious/noArrayIndexKey: blocks are an ordered script
-              <Piece block={block} key={j} />
+              <Piece block={block} lang={lang} key={j} />
             ))}
           </section>
         ))}

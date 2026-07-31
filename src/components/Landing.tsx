@@ -45,7 +45,7 @@ export function Landing({ lang }: { lang: Lang }) {
             </div>
           </div>
 
-          <Diagram name="hero" filename="studio.khm" layout="stack" />
+          <Diagram name="hero" filename="studio.khm" lang={lang} layout="stack" />
         </section>
 
         <section className="shell section" id="catches">
@@ -91,7 +91,7 @@ export function Landing({ lang }: { lang: Lang }) {
                   <h3>{note.title}</h3>
                   <p>{note.body}</p>
                 </div>
-                <Diagram name={name} filename={filename} />
+                <Diagram name={name} filename={filename} lang={lang} />
               </Reveal>
             ))}
           </div>
@@ -103,7 +103,7 @@ export function Landing({ lang }: { lang: Lang }) {
             <h2>{t.editor.title}</h2>
             <p className="mono">{t.editor.lede}</p>
             <div className="band__frame">
-              <LiveEditor label={t.editor.loading} />
+              <LiveEditor label={t.editor.loading} lang={lang} />
             </div>
           </div>
         </section>
