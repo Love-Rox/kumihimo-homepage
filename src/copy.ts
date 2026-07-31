@@ -25,7 +25,14 @@ export interface Copy {
   otherLangHref: string;
   otherLangLabel: string;
 
-  nav: { catches: string; playground: string; docs: string; editor: string; search: string };
+  nav: {
+    catches: string;
+    playground: string;
+    docs: string;
+    editor: string;
+    vscode: string;
+    search: string;
+  };
 
   hero: {
     eyebrow: string;
@@ -50,7 +57,24 @@ export interface Copy {
 
   editor: { eyebrow: string; title: string; lede: string; loading: string };
 
+  vscode: {
+    eyebrow: string;
+    title: string;
+    lede: string;
+    /** What the extension does, one cell each. */
+    features: Note[];
+    installNote: string;
+    marketplace: string;
+    /** The diagnostic shown in the sample panel, and the wiring it is about. */
+    sample: Fault;
+  };
+
   install: { eyebrow: string; title: string; cliNote: string; mdNote: string };
+
+  /** "Latest release", said once and used wherever a version is shown. */
+  released: string;
+  /** Link to the release notes. */
+  changelog: string;
 
   packages: { name: string; what: string }[];
   footerSpec: string;
@@ -76,6 +100,7 @@ export const COPY: Record<Lang, Copy> = {
     nav: {
       catches: '検出できるもの',
       playground: '書き方',
+      vscode: 'VS Code',
       docs: 'ドキュメント',
       editor: '試す',
       search: '検索・移動',
@@ -138,6 +163,36 @@ export const COPY: Record<Lang, Copy> = {
       loading: 'エディタを読み込んでいます…',
     },
 
+    vscode: {
+      eyebrow: 'VS CODE',
+      title: '普段のエディタで、そのまま。',
+      lede: '拡張を入れると、書きながら診断が出て、隣に図が出ます。判定は上と同じコンパイラのものです。',
+      features: [
+        {
+          title: '書きながら診断',
+          body: '構文だけではありません。挿さるのに何も通らない結線を、理由つきで指摘します。',
+        },
+        {
+          title: '隣にプレビュー',
+          body: '⌘K V で開きます。打つたびに描き直し、エディタの配色に追従します。図・ケーブル表・機器表・変換部材をタブで切り替えられます。',
+        },
+        {
+          title: 'コンパイラ由来の補完',
+          body: '信号種別・機器種別・ケーブル色・テーマ。候補はコンパイラが受け付ける名前そのもので、コネクタ名も併記されます。',
+        },
+        {
+          title: '表示言語に追従',
+          body: 'VS Code の表示言語に、拡張の文言もコンパイラの文面も揃います。片方だけ別言語になることはありません。',
+        },
+      ],
+      installNote: '# VS Code に入れる',
+      marketplace: 'Marketplace で見る',
+      sample: {
+        wire: 'ext.CAT → netsw.1',
+        why: 'HDBaseT は Cat ケーブルと RJ45 を使うが Ethernet ではない。スイッチには挿せない',
+      },
+    },
+
     install: {
       eyebrow: 'INSTALL',
       title: '入れて、書く。',
@@ -155,6 +210,8 @@ export const COPY: Record<Lang, Copy> = {
       { name: '@love-rox/kumihimo-astro', what: 'Astro 統合' },
       { name: 'love-rox.kumihimo-vscode', what: 'VS Code 拡張（診断・プレビュー）' },
     ],
+    released: '最新リリース',
+    changelog: '変更履歴',
     footerSpec: '仕様',
   },
 
@@ -169,6 +226,7 @@ export const COPY: Record<Lang, Copy> = {
     nav: {
       catches: 'What it catches',
       playground: 'How it reads',
+      vscode: 'VS Code',
       docs: 'Docs',
       editor: 'Try it',
       search: 'Search',
@@ -237,6 +295,36 @@ export const COPY: Record<Lang, Copy> = {
       loading: 'Loading the editor…',
     },
 
+    vscode: {
+      eyebrow: 'VS CODE',
+      title: 'In the editor you already use.',
+      lede: 'Install the extension and the diagnostics arrive as you type, with the diagram beside the source. The verdicts come from the same compiler as the ones above.',
+      features: [
+        {
+          title: 'Diagnostics as you type',
+          body: 'Not only syntax. A connection that seats perfectly and carries nothing is flagged, with its reason.',
+        },
+        {
+          title: 'Preview beside the source',
+          body: '⌘K V opens it. It redraws as you type, follows your colour theme, and switches between the diagram and the cable, equipment and adapter schedules.',
+        },
+        {
+          title: 'Completions from the compiler',
+          body: 'Signal types, device kinds, jacket colours, themes. Every name offered is one the compiler accepts, with the connectors shown beside each type.',
+        },
+        {
+          title: 'Follows your display language',
+          body: "The extension's own words and the compiler's sentences both follow VS Code, so neither ends up in a language the other is not in.",
+        },
+      ],
+      installNote: '# in VS Code',
+      marketplace: 'View on the Marketplace',
+      sample: {
+        wire: 'ext.CAT → netsw.1',
+        why: 'HDBaseT uses Cat cable and RJ45 but is not Ethernet. It does not go into a switch',
+      },
+    },
+
     install: {
       eyebrow: 'INSTALL',
       title: 'Install it, write it.',
@@ -254,6 +342,8 @@ export const COPY: Record<Lang, Copy> = {
       { name: '@love-rox/kumihimo-astro', what: 'Astro integration' },
       { name: 'love-rox.kumihimo-vscode', what: 'VS Code extension (diagnostics, preview)' },
     ],
+    released: 'Latest release',
+    changelog: 'Changelog',
     footerSpec: 'Spec',
   },
 };

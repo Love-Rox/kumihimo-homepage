@@ -85,7 +85,7 @@ export const DOCS: Record<Lang, Docs> = {
           },
           {
             kind: 'p',
-            text: 'プレビューは `⌘K V`（Windows / Linux は `Ctrl+K V`）、またはタイトルバーのボタンです。エディタの配色に追随します。',
+            text: 'プレビューは `⌘K V`（Windows / Linux は `Ctrl+K V`）、またはタイトルバーのボタンです。エディタの配色に追随し、図・ケーブル表・機器表・変換部材をタブで切り替えられます。補完はコンパイラの一覧そのものから出ます。文言も診断も VS Code の表示言語に追従します。詳しくは[トップページの VS Code の節](/ja#vscode)。',
           },
         ],
       },
@@ -489,7 +489,7 @@ export const DOCS: Record<Lang, Docs> = {
           },
           {
             kind: 'p',
-            text: "The preview opens with `⌘K V` (`Ctrl+K V` on Windows and Linux) or the button in the editor title bar, and follows the editor's colour theme.",
+            text: "The preview opens with `⌘K V` (`Ctrl+K V` on Windows and Linux) or the button in the editor title bar. It follows the editor's colour theme, and switches between the diagram and the cable, equipment and adapter schedules. Completions come from the compiler's own lists, and both the extension's words and the compiler's follow your display language. More on [the VS Code section of the front page](/en#vscode).",
           },
         ],
       },
