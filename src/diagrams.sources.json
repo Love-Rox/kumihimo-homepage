@@ -45,6 +45,18 @@
     "",
     "pc.HDMI -> mon.HDMI : hdmi 5m \"V-01\""
   ],
+  "docsGap": [
+    "device sw \"ATEM Mini Extreme\" as switcher {",
+    "  in  1..4 : hdmi",
+    "  gap",
+    "  in  5..8 : sdi",
+    "  gap 2",
+    "  in  AUDIO_L, AUDIO_R : trs",
+    "  out PGM    : sdi",
+    "  gap",
+    "  out STREAM : lan",
+    "}"
+  ],
   "docsConnect": [
     "device mixer \"卓\"       as mixer     { out L, R : xlr  io DANTE : dante }",
     "device amp   \"アンプ\"   as amplifier { in  IN_L, IN_R : trs  in AC : ac }",

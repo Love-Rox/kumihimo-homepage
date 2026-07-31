@@ -128,6 +128,19 @@ export const DOCS: Record<Lang, Docs> = {
           },
           {
             kind: 'p',
+            text: '端子が等間隔で16個並ぶと、16個の同じものにしか見えません。実機はそうではなく、HDMI が4つ、SDI が4つ、アナログが2つ、と面板が余白で区切っています。`gap` の行を置くと、その次に宣言されるものの上に余白が入ります。',
+          },
+          { kind: 'diagram', name: 'docsGap', filename: 'gap.khm' },
+          {
+            kind: 'p',
+            text: '`gap` ひとつがポート間隔の半分、`gap 2` で1ポート分です。連続して書けば加算されます。複数のポートに展開される宣言でも、余白が入るのは**最初の1つの前だけ**です。`in CH[1..16]` の上の `gap` は `CH1` の前の1箇所であって、16箇所ではありません。',
+          },
+          {
+            kind: 'note',
+            text: 'これは見た目だけの指定です。ポートも結線も一覧表も変わりません。**すべての `gap` を消した図は、同じ系統を表します。**',
+          },
+          {
+            kind: 'p',
             text: '種別は形を決めます。`camera` `switcher` `mixer` `recorder` `player` `display` `projector` `speaker` `microphone` `amplifier` `computer` `converter` `matrix` `patchbay` `router` `interface` `generic` から選びます。省略すると `generic` です。',
           },
           {
@@ -503,6 +516,19 @@ export const DOCS: Record<Lang, Docs> = {
           {
             kind: 'note',
             text: 'Declaration order is preserved and drawn. `IN 1` never ends up below `IN 2`. Position within a device is meaningful information, so nothing gets reordered.',
+          },
+          {
+            kind: 'p',
+            text: 'Sixteen connectors drawn at one pitch read as sixteen of the same thing. Real equipment is not like that: four HDMI inputs, then four SDI, then a pair of analogue jacks, and the panel says so by leaving room between them. A `gap` line leaves that room above whatever is declared next.',
+          },
+          { kind: 'diagram', name: 'docsGap', filename: 'gap.khm' },
+          {
+            kind: 'p',
+            text: 'One `gap` is half a port pitch, so `gap 2` is a whole one. Consecutive gaps add up. A declaration that expands into many ports gets the space **once**, before the first of them: `gap` above `in CH[1..16]` is one space before `CH1`, not sixteen down the strip.',
+          },
+          {
+            kind: 'note',
+            text: 'This is presentation only. No port, connection or schedule changes — **the same diagram with every `gap` removed describes the same system.**',
           },
           {
             kind: 'p',

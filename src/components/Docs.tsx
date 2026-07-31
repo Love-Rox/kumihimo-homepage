@@ -29,22 +29,33 @@ function key(name: string): Key {
  * prose needs exactly these two, and returning nodes means no string of text can ever be
  * read as markup.
  */
+function code(text: string): ReactNode[] {
+  return text.split(/(`[^`]+`)/g).map((part, i) =>
+    part.startsWith('`') && part.endsWith('`') && part.length > 2 ? (
+      // biome-ignore lint/suspicious/noArrayIndexKey: split output is positional
+      <code className="tok" key={i}>
+        {part.slice(1, -1)}
+      </code>
+    ) : (
+      part
+    ),
+  );
+}
+
+/**
+ * Bold first, then code inside it — a sentence that emphasises a claim about `gap` needs
+ * both at once, and splitting on either alone leaves the other's backticks on the page.
+ */
 function inline(text: string): ReactNode[] {
-  return text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g).map((part, i) => {
-    if (part.startsWith('`') && part.endsWith('`') && part.length > 2) {
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
+    part.startsWith('**') && part.endsWith('**') && part.length > 4 ? (
       // biome-ignore lint/suspicious/noArrayIndexKey: split output is positional
-      return (
-        <code className="tok" key={i}>
-          {part.slice(1, -1)}
-        </code>
-      );
-    }
-    if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
+      <strong key={i}>{code(part.slice(2, -2))}</strong>
+    ) : (
       // biome-ignore lint/suspicious/noArrayIndexKey: split output is positional
-      return <strong key={i}>{part.slice(2, -2)}</strong>;
-    }
-    return part;
-  });
+      <span key={i}>{code(part)}</span>
+    ),
+  );
 }
 
 function Diagnostics({ name }: { name: string }) {
