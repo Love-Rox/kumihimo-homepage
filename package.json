@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "diagrams": "node scripts/build-diagrams.mjs",
-    "predev": "pnpm diagrams && pnpm notices && pnpm release",
+    "predev": "pnpm diagrams && pnpm notices && pnpm release && pnpm vocabulary",
     "dev": "waku dev",
-    "prebuild": "pnpm diagrams && pnpm notices && pnpm release",
+    "prebuild": "pnpm diagrams && pnpm notices && pnpm release && pnpm vocabulary",
     "build": "waku build",
     "start": "wrangler dev",
     "deploy": "wrangler deploy",
@@ -20,7 +20,8 @@
     "format": "oxfmt .",
     "format:check": "oxfmt --check .",
     "notices": "node scripts/build-notices.mjs",
-    "release": "node scripts/build-release.mjs"
+    "release": "node scripts/build-release.mjs",
+    "vocabulary": "node scripts/build-vocabulary.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.7",
