@@ -100,7 +100,10 @@ export const COPY: Record<Lang, Copy> = {
           wire: FAULT_WIRES[0]!,
           why: 'HDBaseT は Cat ケーブルと RJ45 を使うが Ethernet ではない。スイッチには挿せない',
         },
-        { wire: FAULT_WIRES[1]!, why: 'BNC を共有するだけ。同期基準入力に映像を入れてもロックしない' },
+        {
+          wire: FAULT_WIRES[1]!,
+          why: 'BNC を共有するだけ。同期基準入力に映像を入れてもロックしない',
+        },
         {
           wire: FAULT_WIRES[2]!,
           why: 'RCA を共有するだけ。アナログ音声を S/PDIF 入力に入れても何も出ない',

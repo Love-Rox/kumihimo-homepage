@@ -8,8 +8,8 @@
   "assets": {
     "binding": "ASSETS",
     "directory": "./dist/public",
-    "html_handling": "drop-trailing-slash"
+    "html_handling": "drop-trailing-slash",
   },
   "rules": [{ "type": "ESModule", "globs": ["**/*.js", "**/*.mjs"] }],
-  "no_bundle": true
+  "no_bundle": true,
 }

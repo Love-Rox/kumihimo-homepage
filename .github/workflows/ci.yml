@@ -22,8 +22,13 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      - run: pnpm lint
+
+      - run: pnpm format:check
+
       # Compiles every .khm example with the published package and fails on any
-      # unexpected diagnostic — the site must not ship a picture of faulty wiring.
+      # diagnostic the example does not declare — the site must neither ship a picture
+      # of faulty wiring nor call a sound diagram faulty.
       - run: pnpm diagrams
 
       - run: pnpm typecheck
