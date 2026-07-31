@@ -1,3 +1,4 @@
+import type { Lang } from '../copy';
 import built from '../generated/diagrams.json';
 
 type Key = keyof typeof built;
@@ -5,6 +6,14 @@ type Key = keyof typeof built;
 type Props = {
   /** Which entry of `src/diagrams.sources.json` to show. */
   name: Key;
+  /**
+   * Which language to draw it in.
+   *
+   * The picture carries three things that have a language — the names on the boxes, the
+   * legend, and the diagnostics quoted beside it — so this is not decoration. Every
+   * example is compiled once per language at build time.
+   */
+  lang: Lang;
   /** Filename shown as a mono label above the code — a label, not fake window chrome. */
   filename: string;
   /**
@@ -43,8 +52,8 @@ function highlight(source: string): string {
  * validates colours before they reach an attribute. Point this at source someone else
  * supplied and it would need `sanitizeSvg` from `@love-rox/kumihimo-editor` first.
  */
-export function Diagram({ name, filename, layout = 'row' }: Props) {
-  const entry = built[name];
+export function Diagram({ name, filename, lang, layout = 'row' }: Props) {
+  const entry = built[name][lang];
 
   return (
     <div className={layout === 'stack' ? 'play__stack' : 'play__row'}>
