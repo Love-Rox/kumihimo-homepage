@@ -15,6 +15,11 @@ import { SAMPLE } from '../sample';
  * The placeholder holds the same height as the editor so nothing jumps when it arrives.
  */
 const Editor = lazy(async () => {
+  // Unreachable on the server: `wanted` only turns true inside an effect, and effects do
+  // not run there. Saying so lets the bundler drop the import from the SSR build, which
+  // otherwise carries 2.6 MB of layout engine into the worker to never execute it.
+  if (import.meta.env.SSR) throw new Error('The editor is client-only.');
+
   // Only the JavaScript is deferred. The editor's stylesheet is imported statically from
   // `styles.css`: the bundler hoists a dynamic CSS import anyway, and a few kB of CSS
   // arriving early is worth having the editor styled the instant it appears.
