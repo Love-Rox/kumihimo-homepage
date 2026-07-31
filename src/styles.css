@@ -836,6 +836,37 @@ kbd {
   color: var(--color-body);
 }
 
+/* Links inside running text. Nav, footer and buttons carry their own affordance; a link in
+   a sentence had none at all — same colour as the words around it, no underline. On the
+   notices page that is not cosmetic: the sentence naming a source has to be followable. */
+.prose a,
+.note a,
+.table a,
+.docs__section p a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: from-font;
+}
+
+.prose a:hover,
+.note a:hover,
+.table a:hover,
+.docs__section p a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* Licence texts are long, wrap at their own margins, and are read rather than scanned.
+   Kept scrollable in height so one 400-line licence does not bury the next component. */
+.licence {
+  max-height: 26rem;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: var(--text-xs);
+  line-height: 1.6;
+}
+
 /* ── Responsive ─────────────────────────────────────────────────────────── */
 
 @media (width < 60rem) {

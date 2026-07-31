@@ -20,8 +20,10 @@ export function Footer({
   return (
     <footer className="foot">
       <div className="shell foot__line">
-        <span className="mono">kumihimo 0.1.0</span>
-        <span className="mono">MIT</span>
+        <span className="mono">kumihimo 0.2.0</span>
+        <a className="mono" href={`/${lang}/licenses`}>
+          MIT
+        </a>
         <a className="mono" href={`/${lang}/docs`}>
           {t.nav.docs}
         </a>

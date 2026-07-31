@@ -31,6 +31,10 @@ jobs:
       # of faulty wiring nor call a sound diagram faulty.
       - run: pnpm diagrams
 
+      # Both of these write into src/generated, which is not committed, and typecheck reads
+      # them. `prebuild` covers a local build; CI type-checks first, so it has to ask.
+      - run: pnpm notices
+
       - run: pnpm typecheck
 
       - run: pnpm build
