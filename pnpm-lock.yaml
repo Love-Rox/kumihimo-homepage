@@ -18,11 +18,11 @@ importers:
         specifier: ^5.2.8
         version: 5.3.0
       '@love-rox/kumihimo-core':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: 0.2.0
       '@love-rox/kumihimo-editor':
-        specifier: ^0.1.0
-        version: 0.1.0(react@19.2.8)
+        specifier: ^0.2.0
+        version: 0.2.0(react@19.2.8)
       react:
         specifier: ^19.2.5
         version: 19.2.8
@@ -493,16 +493,16 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@love-rox/kumihimo-core@0.1.0':
-    resolution: {integrity: sha512-jNZk8BN5rDpBcGwFPFCIdoKMhVgftnXs9p4nnIjXJxrJUDoQ1a0X4ocMY3BoGbRsGYB50bAXi8Dcwd0o01bJiA==}
+  '@love-rox/kumihimo-core@0.2.0':
+    resolution: {integrity: sha512-XzT8YBH25MAOB6GwiHvRJlf7JoriSLaQ3ezuZ2RzMDpd0JT6a5+fjxnN0RDc1kGATlHiOZXq0c8ldBIpTyUePg==}
 
-  '@love-rox/kumihimo-editor@0.1.0':
-    resolution: {integrity: sha512-MwYJntko7apGopKie4Qngqhk+Ju4cTLXOEkfsATXPEGRapoQOwJ0Fa9jDwYIoQTMefuI/FibwnW5ohAFYSQW0w==}
+  '@love-rox/kumihimo-editor@0.2.0':
+    resolution: {integrity: sha512-T5rzpCD2G3SQJ0XAC3yW6ECkzD3DnGF+hxToeAndBCDzPcvK8PH5B6PzHsZMyGSUxW4VNeW5rh81+8facf8q6w==}
     peerDependencies:
       react: '>=18'
 
-  '@love-rox/kumihimo-react@0.1.0':
-    resolution: {integrity: sha512-YmVRP4p/ajVuKyb6M/FM7+rEKEmoTRs+pM7d05KxJHDNSl+w6CQnLkybZW5ffsvrJv/6dA1BFl8N5YDzqonv8Q==}
+  '@love-rox/kumihimo-react@0.2.0':
+    resolution: {integrity: sha512-pVF721FdCK7H2h4NI8NwsW/0LRzUd99viurXiGjmFTjdeNq1bG71m20AlFUQTwAn7wh6VVevaNQo+wly82E1/w==}
     peerDependencies:
       react: '>=18'
 
@@ -2393,19 +2393,19 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@love-rox/kumihimo-core@0.1.0':
+  '@love-rox/kumihimo-core@0.2.0':
     dependencies:
       elkjs: 0.12.0
 
-  '@love-rox/kumihimo-editor@0.1.0(react@19.2.8)':
+  '@love-rox/kumihimo-editor@0.2.0(react@19.2.8)':
     dependencies:
-      '@love-rox/kumihimo-core': 0.1.0
-      '@love-rox/kumihimo-react': 0.1.0(react@19.2.8)
+      '@love-rox/kumihimo-core': 0.2.0
+      '@love-rox/kumihimo-react': 0.2.0(react@19.2.8)
       react: 19.2.8
 
-  '@love-rox/kumihimo-react@0.1.0(react@19.2.8)':
+  '@love-rox/kumihimo-react@0.2.0(react@19.2.8)':
     dependencies:
-      '@love-rox/kumihimo-core': 0.1.0
+      '@love-rox/kumihimo-core': 0.2.0
       react: 19.2.8
 
   '@napi-rs/wasm-runtime@1.2.1(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)':

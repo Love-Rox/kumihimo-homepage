@@ -25,7 +25,7 @@ function highlight(source: string): string {
     .replace(/(#[^\n]*)/g, '<span class="c">$1</span>')
     .replace(/("[^"\n]*")/g, '<span class="s">$1</span>')
     .replace(
-      /\b(diagram|device|group|model|signal|compat|use|in|out|io|as|from|via)\b/g,
+      /\b(diagram|device|group|model|signal|compat|use|in|out|io|as|from|via|gap)\b/g,
       '<span class="k">$1</span>',
     )
     .replace(/(-&gt;|&lt;-&gt;|--)/g, '<span class="n">$1</span>');
