@@ -231,6 +231,10 @@ a {
 .searchpill {
   display: flex;
   align-items: center;
+  /* A wrapped button label is the most common mobile tell, and this one wrapped one
+     character per line at 375px. */
+  white-space: nowrap;
+  flex: none;
   gap: var(--space-sm);
   height: 36px;
   padding: 0 var(--space-xs) 0 var(--space-sm);
@@ -246,6 +250,24 @@ a {
 
 .searchpill:hover {
   border-color: var(--color-accent);
+}
+
+/* Three bars, drawn rather than imported, shown only once the links collapse. */
+.searchpill__bars {
+  display: none;
+  flex-direction: column;
+  gap: 3px;
+  width: 14px;
+}
+
+.searchpill__bars span {
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+.searchpill__menu {
+  display: none;
 }
 
 kbd {
@@ -1051,20 +1073,50 @@ kbd {
   }
 }
 
-/* The links need about 800px between the brand and the right-hand controls. Adding
-   "VS Code" to the row pushed that past what a tablet has, and a nav that overflows is
-   worse than one that hands the job to ⌘K, which reaches every section anyway. */
-@media (width < 52rem) {
+/* Measured, not guessed: with seven links the row needs about 1000px between the brand and
+   the right-hand controls, and below that it overflowed a header that clips rather than
+   scrolls. The old threshold was 52rem, which left 832–1000px showing links that ran off
+   the edge. 64rem with room to spare, and below it the menu button takes the job. */
+@media (width < 64rem) {
   .nav__links {
+    display: none;
+  }
+
+  /* With the links gone this is the only way to the rest of the site, so it stops looking
+     like a keyboard shortcut and starts looking like a menu. A phone cannot press ⌘K. */
+  .searchpill__bars {
+    display: flex;
+  }
+
+  .searchpill__menu {
+    display: inline;
+  }
+
+  .searchpill__text,
+  .searchpill__keys {
+    display: none;
+  }
+
+  .searchpill {
+    color: var(--color-ink);
+  }
+
+  /* The language switch moves into the menu, where it has its own group. Keeping it in
+     the bar as well left the menu button no room for its own label. */
+  .nav__right > .nav__link {
+    display: none;
+  }
+}
+
+/* Under about 384px even the brand, the menu and the GitHub button do not fit together.
+   GitHub is one tap away inside the menu; a header cut off at the right edge is not. */
+@media (width < 24rem) {
+  .nav__right > .btn {
     display: none;
   }
 }
 
 @media (width < 40rem) {
-  .searchpill__text {
-    display: none;
-  }
-
   .diag__row {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-xs);
