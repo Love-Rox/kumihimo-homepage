@@ -410,6 +410,7 @@ kbd {
 
 .play__stack {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-md);
 }
 
@@ -438,6 +439,7 @@ kbd {
 
 .slab {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-xs);
 }
 
@@ -876,6 +878,12 @@ kbd {
   border-bottom: var(--rule-hair) solid var(--color-rule);
   /* Anchor links land below the section heading without this. */
   scroll-margin-top: var(--space-lg);
+  /* An implicit grid track is `auto`, which means "as wide as the widest thing in it".
+     One long line of code inside a `pre` that was perfectly willing to scroll widened
+     the track past the viewport instead, and the root's `overflow-x: clip` then cut it
+     off with nothing to scroll. `minmax(0, …)` lets the track be narrower than its
+     content, which is what makes the inner scrolling work. */
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .docs__h2 {
