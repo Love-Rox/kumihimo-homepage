@@ -138,7 +138,7 @@ for (const [key, entry] of Object.entries(sources)) {
           carrier: r.carrierLabel ?? '',
           frequency: r.frequency ?? '',
         })),
-        parts: adapterSchedule(diagram, locale).map((r) => ({
+        adapter: adapterSchedule(diagram, locale).map((r) => ({
           adapter: r.adapter,
           count: r.count,
           links: r.links.join(' / '),

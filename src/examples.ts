@@ -136,7 +136,7 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           { kind: 'diagram', name: 'docsVia', filename: 'lead.khm' },
           { kind: 'schedule', name: 'docsVia', of: 'cable' },
-          { kind: 'schedule', name: 'docsVia', of: 'parts' },
+          { kind: 'schedule', name: 'docsVia', of: 'adapter' },
           {
             kind: 'p',
             text: '**ケーブル表に1行、部材表は空**です。1個の物は1行になります。これを `adapter` で書くと図の途中に箱が立ち、1本のケーブルが2本に見えてしまいます。',
@@ -158,7 +158,7 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           { kind: 'diagram', name: 'exDongle', filename: 'dongle.khm' },
           { kind: 'schedule', name: 'exDongle', of: 'cable' },
-          { kind: 'schedule', name: 'exDongle', of: 'parts' },
+          { kind: 'schedule', name: 'exDongle', of: 'adapter' },
           {
             kind: 'p',
             text: 'USB 側には何も書いていないので**一体**と読まれ、ケーブル表に出ません。HDMI 側には `5m "V-01"` があるので**ソケット**と読まれ、持っていくケーブルとして1行出ます。変換器そのものは部材表に1個。**現場で必要なものと過不足なく一致します。**',
@@ -176,7 +176,7 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           { kind: 'diagram', name: 'exPanel', filename: 'panel.khm' },
           { kind: 'schedule', name: 'exPanel', of: 'cable' },
-          { kind: 'schedule', name: 'exPanel', of: 'parts' },
+          { kind: 'schedule', name: 'exPanel', of: 'adapter' },
           {
             kind: 'p',
             text: '**3本と、パネル1枚。**端がいくつあっても規則は同じです。',
@@ -194,7 +194,7 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           { kind: 'diagram', name: 'exMoulded', filename: 'moulded.khm' },
           { kind: 'schedule', name: 'exMoulded', of: 'cable' },
-          { kind: 'schedule', name: 'exMoulded', of: 'parts' },
+          { kind: 'schedule', name: 'exMoulded', of: 'adapter' },
           {
             kind: 'p',
             text: '**1個の物が1行**です。プラグごとに3行にはなりません。届く先はまとめて並びます。部材表からは外れるので、二重に数えられません。',
@@ -216,7 +216,7 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           { kind: 'diagram', name: 'exSplitLead', filename: 'splitter-lead.khm' },
           { kind: 'schedule', name: 'exSplitLead', of: 'cable' },
-          { kind: 'schedule', name: 'exSplitLead', of: 'parts' },
+          { kind: 'schedule', name: 'exSplitLead', of: 'adapter' },
           {
             kind: 'p',
             text: '**結線には何も書きません。** `: trrs35` `: trs35` だけです。長さもケーブル番号も付けない。書いた瞬間そこは**ソケット**になり、「別途ケーブルが要る」という意味に変わります。1本なので書きません。長さと番号は `as cable` のうしろに、**物として1つ**だけ付けます。',
@@ -227,7 +227,7 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           { kind: 'diagram', name: 'exSplitPanel', filename: 'splitter-panel.khm' },
           { kind: 'schedule', name: 'exSplitPanel', of: 'cable' },
-          { kind: 'schedule', name: 'exSplitPanel', of: 'parts' },
+          { kind: 'schedule', name: 'exSplitPanel', of: 'adapter' },
           {
             kind: 'table',
             head: ['', '1本のケーブル', '分岐アダプタ'],
@@ -534,7 +534,7 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           { kind: 'diagram', name: 'docsVia', filename: 'lead.khm' },
           { kind: 'schedule', name: 'docsVia', of: 'cable' },
-          { kind: 'schedule', name: 'docsVia', of: 'parts' },
+          { kind: 'schedule', name: 'docsVia', of: 'adapter' },
           {
             kind: 'p',
             text: '**One cable row, an empty parts list.** One object, one row. Written as an `adapter` it would put a box in the middle of the drawing and turn one cable into what looks like two.',
@@ -556,7 +556,7 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           { kind: 'diagram', name: 'exDongle', filename: 'dongle.khm' },
           { kind: 'schedule', name: 'exDongle', of: 'cable' },
-          { kind: 'schedule', name: 'exDongle', of: 'parts' },
+          { kind: 'schedule', name: 'exDongle', of: 'adapter' },
           {
             kind: 'p',
             text: 'Nothing is written on the USB side, so it reads as **moulded on** and produces no cable row. The HDMI side carries `5m "V-01"`, so it reads as a **socket** and produces one cable to bring. The adapter itself is one part. **Exactly what has to be in the case, and nothing else.**',
@@ -574,7 +574,7 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           { kind: 'diagram', name: 'exPanel', filename: 'panel.khm' },
           { kind: 'schedule', name: 'exPanel', of: 'cable' },
-          { kind: 'schedule', name: 'exPanel', of: 'parts' },
+          { kind: 'schedule', name: 'exPanel', of: 'adapter' },
           {
             kind: 'p',
             text: '**Three cables and one panel.** The rule holds at any number of ends.',
@@ -592,7 +592,7 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           { kind: 'diagram', name: 'exMoulded', filename: 'moulded.khm' },
           { kind: 'schedule', name: 'exMoulded', of: 'cable' },
-          { kind: 'schedule', name: 'exMoulded', of: 'parts' },
+          { kind: 'schedule', name: 'exMoulded', of: 'adapter' },
           {
             kind: 'p',
             text: '**One object, one row** — not one per plug. The far ends are listed together. It leaves the parts list, so it is not counted twice.',
@@ -614,7 +614,7 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           { kind: 'diagram', name: 'exSplitLead', filename: 'splitter-lead.khm' },
           { kind: 'schedule', name: 'exSplitLead', of: 'cable' },
-          { kind: 'schedule', name: 'exSplitLead', of: 'parts' },
+          { kind: 'schedule', name: 'exSplitLead', of: 'adapter' },
           {
             kind: 'p',
             text: '**The runs carry nothing** — just `: trrs35` and `: trs35`. No length, no cable number. Writing one makes that end a **socket**, which means "and a separate cable to reach it". This is one object, so nothing is written. The length and the number go after `as cable`, **once, for the object**.',
@@ -625,7 +625,7 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           { kind: 'diagram', name: 'exSplitPanel', filename: 'splitter-panel.khm' },
           { kind: 'schedule', name: 'exSplitPanel', of: 'cable' },
-          { kind: 'schedule', name: 'exSplitPanel', of: 'parts' },
+          { kind: 'schedule', name: 'exSplitPanel', of: 'adapter' },
           {
             kind: 'table',
             head: ['', 'One cable', 'A splitter'],
