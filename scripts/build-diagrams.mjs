@@ -125,7 +125,12 @@ for (const [key, entry] of Object.entries(sources)) {
           // hold a length holds the frequency instead. Both are empty when neither is
           // written, which is a different thing from `?m` and has to look different.
           length: r.length ?? '',
-          connectors: r.connectors.join(' / '),
+          // The ends this run terminates in, not every shell the signal comes in. The list
+          // was identical on every row of a given signal — the row already says HDMI — and
+          // it got worse the moment signals had shells to list. `HDMI Micro → HDMI` is the
+          // fact somebody packs from, and it is the one the page was not showing.
+          fromConnector: r.fromConnector ?? '',
+          toConnector: r.toConnector ?? '',
           note: r.note ?? '',
         })),
         // Radio paths are their own sheet. Nothing here is coiled; what it needs is a
