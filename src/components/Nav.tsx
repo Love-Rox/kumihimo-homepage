@@ -43,6 +43,12 @@ function commandsFor(lang: Lang, otherHref: string): Command[] {
     { group: groups.docs, label: t.nav.docs, hint: `${home}/docs`, href: `${home}/docs` },
     {
       group: groups.docs,
+      label: t.nav.examples,
+      hint: `${home}/examples`,
+      href: `${home}/examples`,
+    },
+    {
+      group: groups.docs,
       label: 'SPEC (English)',
       hint: 'docs/SPEC.md',
       href: 'https://github.com/Love-Rox/kumihimo/blob/main/docs/SPEC.md',
@@ -55,7 +61,7 @@ function commandsFor(lang: Lang, otherHref: string): Command[] {
     },
     {
       group: groups.docs,
-      label: 'Examples',
+      label: 'Examples on GitHub',
       hint: 'examples/',
       href: 'https://github.com/Love-Rox/kumihimo/tree/main/examples',
     },
@@ -185,6 +191,9 @@ export function Nav({
             </a>
             <a className="nav__link" href={`/${lang}/docs`}>
               {t.nav.docs}
+            </a>
+            <a className="nav__link" href={`/${lang}/examples`}>
+              {t.nav.examples}
             </a>
           </nav>
           <div className="nav__right">

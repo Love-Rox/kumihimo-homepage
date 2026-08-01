@@ -1,6 +1,5 @@
 {
   "_why": "Display names drawn inside the example diagrams, in English. The wiring is defined once in diagrams.sources.json; only the quoted names are swapped, so the two languages cannot drift apart in what they actually demonstrate. A name absent here is drawn as written — kit model numbers and signal types are the same word everywhere.",
-
   "カメラ": "Camera",
   "スイッチャー": "Switcher",
   "スイッチ": "Switch",
@@ -16,14 +15,20 @@
   "HDBaseT受信器": "HDBaseT receiver",
   "L2スイッチ": "L2 switch",
   "HDMI-DVI変換ケーブル": "HDMI-DVI cable",
-
   "ステージ": "Stage",
   "ラック": "Rack",
   "会場": "House",
   "電源": "Power",
-
   "白黒印刷用": "For monochrome printing",
-
   "_colours": "Jacket colours are keywords rather than labels, so they sit outside the quotes. kumihimo accepts both spellings; the example should show the one its reader would type.",
-  "青": "blue"
+  "青": "blue",
+  "サブ": "Sub",
+  "USB-HDMI変換": "USB-HDMI adapter",
+  "プロジェクター": "Projector",
+  "分配パネル": "Distribution panel",
+  "XLR4分岐ケーブル": "XLR 4-way lead",
+  "中継カメラ": "Roving camera",
+  "アクセスポイント": "Access point",
+  "収録PC": "Recording PC",
+  "配信PC": "Streaming PC"
 }

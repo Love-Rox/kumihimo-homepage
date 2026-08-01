@@ -38,7 +38,6 @@
     "device foh from dm3",
     "device mon from dm3 \"モニター卓\""
   ],
-
   "docsFirst": [
     "device pc  \"ノートPC\"  as computer { out HDMI : hdmi }",
     "device mon \"モニター\" as display  { in  HDMI : hdmi }",
@@ -110,5 +109,87 @@
     "",
     "cam.SDI -> sw.1    : sdi 30m \"V-01\" [color=青]",
     "sw.PGM  -> rec.SDI : sdi 2m  \"V-10\""
+  ],
+  "exBasic": [
+    "device cam \"カメラ\"       as camera   { out SDI : sdi }",
+    "device sw  \"スイッチャー\" as switcher { in  1   : sdi }",
+    "",
+    "cam.SDI -> sw.1 : sdi"
+  ],
+  "exLength": [
+    "device cam \"カメラ\"       as camera   { out SDI : sdi }",
+    "device sw  \"スイッチャー\" as switcher { in  1   : sdi  out PGM : sdi }",
+    "device rec \"レコーダー\"   as recorder { in  SDI : sdi }",
+    "",
+    "cam.SDI -> sw.1    : sdi 30m \"V-01\" [color=青]",
+    "sw.PGM  -> rec.SDI : sdi  2m \"V-10\""
+  ],
+  "exUnknown": [
+    "device dk  \"卓\"   as mixer   { out L, R, SUB : xlr }",
+    "device sp1 \"SP1\"  as speaker { in IN : xlr }",
+    "device sp2 \"SP2\"  as speaker { in IN : xlr }",
+    "device sub \"サブ\" as speaker { in IN : xlr }",
+    "",
+    "dk.L   -> sp1.IN : xlr 15m \"A-01\"   # 測った",
+    "dk.R   -> sp2.IN : xlr ?m  \"A-02\"   # ケーブルは要る。長さはこれから",
+    "dk.SUB -> sub.IN : xlr     \"A-03\"   # 長さについて何も言っていない"
+  ],
+  "exMany": [
+    "device sw  \"スイッチャー\" as switcher { out 1..4 : sdi }",
+    "device rec \"レコーダー\"   as recorder { in  1..4 : sdi }",
+    "",
+    "sw.(1, 2, 3, 4) -> rec.(1, 2, 3, 4) : sdi 5m"
+  ],
+  "exDongle": [
+    "device pc  \"ノートPC\"       as computer  { out USB  : usb }",
+    "adapter dg \"USB-HDMI変換\"                { in  USB  : usb",
+    "                                            out HDMI : hdmi }",
+    "device pj  \"プロジェクター\" as projector { in  HDMI : hdmi }",
+    "",
+    "pc.USB  -> dg.USB  : usb              # 一体。ケーブル表に出ない",
+    "dg.HDMI -> pj.HDMI : hdmi 5m \"V-01\"   # ソケット。持っていくケーブル1本"
+  ],
+  "exPanel": [
+    "device dk  \"卓\"         as mixer   { out MAIN : xlr }",
+    "adapter pp \"分配パネル\"            { in  IN : xlr",
+    "                                      out A  : xlr",
+    "                                      out B  : xlr }",
+    "device sp1 \"SP1\"        as speaker { in IN : xlr }",
+    "device sp2 \"SP2\"        as speaker { in IN : xlr }",
+    "",
+    "dk.MAIN -> pp.IN  : xlr 10m \"A-01\"",
+    "pp.A    -> sp1.IN : xlr  5m \"A-02\"",
+    "pp.B    -> sp2.IN : xlr  5m \"A-03\""
+  ],
+  "exMoulded": [
+    "device  dk  \"卓\" as mixer { out MAIN : xlr }",
+    "adapter fan \"XLR4分岐ケーブル\" as cable 5m \"C-01\" {",
+    "  in  IN : xlr",
+    "  out A  : xlr",
+    "  out B  : xlr",
+    "}",
+    "device sp1 \"SP1\" as speaker { in IN : xlr }",
+    "device sp2 \"SP2\" as speaker { in IN : xlr }",
+    "",
+    "dk.MAIN -> fan.IN : xlr",
+    "fan.A   -> sp1.IN : xlr",
+    "fan.B   -> sp2.IN : xlr"
+  ],
+  "exOver": [
+    "device cam \"中継カメラ\"       as camera   { out WIFI : ndi }",
+    "device ap  \"アクセスポイント\" as router   { io  WIFI : ndi",
+    "                                             out LAN  : ndi }",
+    "device pc  \"収録PC\"           as recorder { in  LAN  : ndi }",
+    "",
+    "cam.WIFI -> ap.WIFI : ndi over wifi [ch=36]",
+    "ap.LAN   -> pc.LAN  : ndi over lan 20m \"N-01\""
+  ],
+  "exDante": [
+    "device dk \"卓\"         as mixer    { io DANTE : dante }",
+    "device sw \"L2スイッチ\" as router   { io 1 : dante  io 2 : ndi }",
+    "device pc \"配信PC\"     as computer { io LAN : ndi }",
+    "",
+    "dk.DANTE -> sw.1   : dante over lan 15m \"N-01\"",
+    "sw.2     -> pc.LAN : ndi   over lan 10m \"N-02\""
   ]
 }

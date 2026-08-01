@@ -20,9 +20,22 @@
  * A count that does not match the declaration fails the build in both directions. An
  * example that stops being wrong is as much of a problem as one that stops being right,
  * because the prose beside it would go on claiming otherwise.
+ *
+ * The schedules are computed here too. Much of what the language decides is invisible in
+ * the drawing and shows up only in the lists somebody packs a van from — whether a moulded
+ * tail counts as a cable, whether a part appears once or twice. A page arguing about that
+ * has to print the real table, or it is arguing about nothing the reader can check.
  */
 
-import { LOCALES, compile } from '@love-rox/kumihimo-core';
+import {
+  LOCALES,
+  adapterSchedule,
+  buildModel,
+  cableSchedule,
+  compile,
+  equipmentSchedule,
+  parse,
+} from '@love-rox/kumihimo-core';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -87,6 +100,11 @@ for (const [key, entry] of Object.entries(sources)) {
     const source = inLocale(written, locale);
     const { svg, diagnostics } = await compile(source, { legend: false, locale });
 
+    // The same source again, through the model rather than the renderer. `compile` returns
+    // a picture; the schedules need the resolved diagram, and building it twice is cheaper
+    // than widening `compile`'s return for one caller.
+    const { diagram } = buildModel(parse(source, { locale }).document, { locale });
+
     built[key][locale] = {
       source,
       svg,
@@ -96,6 +114,32 @@ for (const [key, entry] of Object.entries(sources)) {
         code: d.code,
         message: d.message,
       })),
+      schedules: {
+        cable: cableSchedule(diagram, locale).map((r) => ({
+          label: r.label ?? '',
+          from: r.fromDevice,
+          to: r.toDevice,
+          signal: r.signalLabel || r.signal,
+          // A radio path is measured in channels, not metres, so the column that would
+          // hold a length holds the frequency instead. Both are empty when neither is
+          // written, which is a different thing from `?m` and has to look different.
+          length: r.length ?? r.frequency ?? '',
+          connectors: r.connectors.join(' / '),
+          wireless: r.medium !== 'cable',
+          note: r.note ?? '',
+        })),
+        parts: adapterSchedule(diagram, locale).map((r) => ({
+          adapter: r.adapter,
+          count: r.count,
+          links: r.links.join(' / '),
+        })),
+        equipment: equipmentSchedule(diagram).map((r) => ({
+          device: r.label,
+          kind: r.kind,
+          group: r.group ?? '',
+          ports: r.ports,
+        })),
+      },
     };
 
     // The diagnostics are a property of the wiring, so the count must not depend on the

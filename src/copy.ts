@@ -29,6 +29,7 @@ export interface Copy {
     catches: string;
     playground: string;
     docs: string;
+    examples: string;
     editor: string;
     vscode: string;
     search: string;
@@ -102,6 +103,7 @@ export const COPY: Record<Lang, Copy> = {
       playground: '書き方',
       vscode: 'VS Code',
       docs: 'ドキュメント',
+      examples: '記述例',
       editor: '試す',
       search: '検索・移動',
     },
@@ -228,6 +230,7 @@ export const COPY: Record<Lang, Copy> = {
       playground: 'How it reads',
       vscode: 'VS Code',
       docs: 'Docs',
+      examples: 'Recipes',
       editor: 'Try it',
       search: 'Search',
     },
