@@ -1,7 +1,8 @@
 import type { Lang } from '../copy';
 import { COPY } from '../copy';
 import { RELEASE } from '../release';
-import { Diagram } from './Diagram';
+import built from '../generated/diagrams.json';
+import { Diagram, highlight } from './Diagram';
 import { Footer } from './Footer';
 import { LiveEditor } from './LiveEditor';
 import { Nav } from './Nav';
@@ -13,6 +14,14 @@ import { Reveal } from './Reveal';
  * One component rather than two pages so the structure cannot drift between the
  * languages — only the strings differ, and they all live in `copy.ts`.
  */
+const DIAGRAMS = built;
+
+/** The block a reader would type, which is the source the drawing beside it was made from. */
+const NOTE_SOURCE = {
+  ja: built.hero.ja.source,
+  en: built.hero.en.source,
+} as const;
+
 export function Landing({ lang }: { lang: Lang }) {
   const t = COPY[lang];
 
@@ -157,6 +166,69 @@ export function Landing({ lang }: { lang: Lang }) {
 
             <div className="feats">
               {t.vscode.features.map((feature) => (
+                <div className="feat" key={feature.title}>
+                  <h3>{feature.title}</h3>
+                  <p>{feature.body}</p>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        </section>
+
+        <section className="shell section" id="obsidian">
+          <Reveal>
+            <div className="section__head">
+              <p className="mono eyebrow">{t.obsidian.eyebrow}</p>
+              <h2>{t.obsidian.title}</h2>
+              <p>{t.obsidian.lede}</p>
+            </div>
+
+            {/* The source and the drawing come from the same entry, so the block shown
+                and the picture beside it cannot come to disagree — which is the one thing
+                a section about writing diagrams in notes must not do. The fence lines are
+                added around it because that is what somebody actually types. */}
+            <div className="play__row">
+              <div className="slab">
+                <div className="slab__label">
+                  <span className="mono">note.md</span>
+                </div>
+                <pre className="code">
+                  <code
+                    // Same highlighter as every other block on the site. Written as plain
+                    // text it sat colourless beside ones that were not, which reads as a
+                    // different kind of thing rather than the same thing in a note.
+                    dangerouslySetInnerHTML={{
+                      __html: highlight(
+                        `${t.obsidian.fence}\n\`\`\`kumihimo\n${NOTE_SOURCE[lang]}\n\`\`\``,
+                      ),
+                    }}
+                  />
+                </pre>
+              </div>
+              <div className="slab">
+                <span className="mono">output</span>
+                <div
+                  className="preview"
+                  // Same provenance as every other drawing on this site: compiled by the
+                  // published package at build time, from a literal in this repository.
+                  dangerouslySetInnerHTML={{ __html: DIAGRAMS.hero[lang].svg }}
+                />
+              </div>
+            </div>
+
+            <p className="release">
+              <span>{t.obsidian.status}</span>
+              <a
+                href="https://github.com/Love-Rox/obsidian-kumihimo/releases"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t.obsidian.releases}
+              </a>
+            </p>
+
+            <div className="feats">
+              {t.obsidian.features.map((feature) => (
                 <div className="feat" key={feature.title}>
                   <h3>{feature.title}</h3>
                   <p>{feature.body}</p>
