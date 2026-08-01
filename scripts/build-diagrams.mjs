@@ -35,6 +35,7 @@ import {
   compile,
   equipmentSchedule,
   parse,
+  wirelessSchedule,
 } from '@love-rox/kumihimo-core';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
@@ -123,10 +124,19 @@ for (const [key, entry] of Object.entries(sources)) {
           // A radio path is measured in channels, not metres, so the column that would
           // hold a length holds the frequency instead. Both are empty when neither is
           // written, which is a different thing from `?m` and has to look different.
-          length: r.length ?? r.frequency ?? '',
+          length: r.length ?? '',
           connectors: r.connectors.join(' / '),
-          wireless: r.medium !== 'cable',
           note: r.note ?? '',
+        })),
+        // Radio paths are their own sheet. Nothing here is coiled; what it needs is a
+        // frequency somebody has to co-ordinate, which is a different job.
+        wireless: wirelessSchedule(diagram, locale).map((r) => ({
+          label: r.label ?? '',
+          from: r.fromDevice,
+          to: r.toDevice,
+          signal: r.signalLabel || r.signal,
+          carrier: r.carrierLabel ?? '',
+          frequency: r.frequency ?? '',
         })),
         parts: adapterSchedule(diagram, locale).map((r) => ({
           adapter: r.adapter,

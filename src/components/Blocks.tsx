@@ -87,6 +87,12 @@ const SCHEDULE_HEADS: Record<string, Record<Lang, string[]>> = {
     ja: ['番号', 'から', 'へ', '信号', '長さ', 'コネクタ'],
     en: ['No.', 'From', 'To', 'Signal', 'Length', 'Connectors'],
   },
+  // No length and no connector column, because a radio path has neither. What it has is a
+  // channel somebody has to co-ordinate, and what it is riding on when `over` said so.
+  wireless: {
+    ja: ['番号', 'から', 'へ', '信号', '乗り物', 'チャンネル'],
+    en: ['No.', 'From', 'To', 'Signal', 'Over', 'Channel'],
+  },
   parts: {
     ja: ['部材', '数', 'つながる先'],
     en: ['Part', 'Qty', 'Between'],
@@ -99,6 +105,7 @@ const SCHEDULE_HEADS: Record<string, Record<Lang, string[]>> = {
 
 const SCHEDULE_TITLES: Record<string, Record<Lang, string>> = {
   cable: { ja: 'ケーブル表', en: 'Cable schedule' },
+  wireless: { ja: '無線表', en: 'Wireless schedule' },
   parts: { ja: '部材表', en: 'Parts list' },
   equipment: { ja: '機材表', en: 'Equipment list' },
 };
@@ -111,21 +118,31 @@ const SCHEDULE_TITLES: Record<string, Record<Lang, string>> = {
  * empty, and omitting the table would hide the claim being made.
  */
 function Schedule({ name, of, lang }: { name: string; of: string; lang: Lang }) {
-  const rows = built[key(name)][lang].schedules[of as 'cable' | 'parts' | 'equipment'];
+  const rows = built[key(name)][lang].schedules[of as 'cable' | 'wireless' | 'parts' | 'equipment'];
   const head = SCHEDULE_HEADS[of]?.[lang] ?? [];
   const ja = lang === 'ja';
 
   const cells = rows.map((row) => {
     if ('adapter' in row) return [row.adapter, String(row.count), row.links];
     if ('device' in row) return [row.device, row.kind, row.group || '—', String(row.ports)];
+    if ('carrier' in row) {
+      return [
+        row.label || '—',
+        row.from,
+        row.to,
+        row.signal,
+        // Empty when the signal is its own carrier: "uhf, riding on uhf" is noise, and the
+        // column is here to answer what a thing is actually going over.
+        row.carrier || '—',
+        row.frequency || '—',
+      ];
+    }
     return [
       row.label || '—',
       row.from,
       row.to,
       row.signal,
-      // A radio path with nothing said about it leaves this blank, which is honest: there
-      // is no length to give and no channel was written.
-      row.length || (row.wireless ? (ja ? '無線' : 'radio') : '—'),
+      row.length || '—',
       row.connectors || (ja ? 'コネクタなし' : 'none'),
     ];
   });

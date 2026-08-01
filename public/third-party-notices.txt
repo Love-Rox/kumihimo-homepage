@@ -701,7 +701,7 @@ FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.
 
 ==============================================================================
-@love-rox/kumihimo-core 0.6.0
+@love-rox/kumihimo-core 0.7.0
 コンパイラ / compiler
 SPDX: MIT
 Home: https://github.com/Love-Rox/kumihimo#readme
@@ -730,7 +730,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ==============================================================================
-@love-rox/kumihimo-editor 0.6.0
+@love-rox/kumihimo-editor 0.7.0
 ライブエディタ / live editor
 SPDX: MIT
 Home: https://github.com/Love-Rox/kumihimo#readme

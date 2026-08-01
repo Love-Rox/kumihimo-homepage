@@ -191,5 +191,37 @@
     "",
     "dk.DANTE -> sw.1   : dante over lan 15m \"N-01\"",
     "sw.2     -> pc.LAN : ndi   over lan 10m \"N-02\""
+  ],
+  "exSplitLead": [
+    "device pc \"ノートPC\" as computer { io HS : trrs35 }",
+    "",
+    "adapter sp \"TRRS→TRS×2 分岐ケーブル\" as cable 0.2m \"A-01\" {",
+    "  io  IN  : trrs35",
+    "  out MIC : trs35",
+    "  out HP  : trs35",
+    "}",
+    "",
+    "device mic \"マイク\"     as microphone { in PLUG : trs35 }",
+    "device hp  \"ヘッドホン\" as speaker    { in PLUG : trs35 }",
+    "",
+    "pc.HS  -> sp.IN    : trrs35   # 生えている",
+    "sp.MIC -> mic.PLUG : trs35    # 生えている",
+    "sp.HP  -> hp.PLUG  : trs35    # 生えている"
+  ],
+  "exSplitPanel": [
+    "device pc \"ノートPC\" as computer { io HS : trrs35 }",
+    "",
+    "adapter sp \"TRRS分岐アダプタ\" {",
+    "  io  IN  : trrs35",
+    "  out MIC : trs35",
+    "  out HP  : trs35",
+    "}",
+    "",
+    "device mic \"コンデンサマイク\" as microphone { in IN : trs35 }",
+    "device amp \"アンプ\"           as amplifier  { in IN : trs35 }",
+    "",
+    "pc.HS  -> sp.IN  : trrs35            # 生えている",
+    "sp.MIC -> mic.IN : trs35 2m \"A-01\"   # ソケット",
+    "sp.HP  -> amp.IN : trs35 3m \"A-02\"   # ソケット"
   ]
 }
