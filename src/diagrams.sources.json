@@ -223,5 +223,25 @@
     "pc.HS  -> sp.IN  : trrs35            # 生えている",
     "sp.MIC -> mic.IN : trs35 2m \"A-01\"   # ソケット",
     "sp.HP  -> amp.IN : trs35 3m \"A-02\"   # ソケット"
+  ],
+  "docsConnector": [
+    "device dk \"卓\" as mixer   { out CH[1..2] : xlr [connector=XLR-M] }",
+    "device sp \"SP\" as speaker { in  IN       : xlr [connector=XLR-F] }",
+    "",
+    "dk.CH1 -> sp.IN : xlr 10m \"A-01\""
+  ],
+  "docsNested": [
+    "diagram \"会場\" { direction: LR }",
+    "",
+    "group venue \"幕張メッセ\" {",
+    "  group stage \"ステージ\" {",
+    "    device cam \"FX3\" as camera { out SDI : sdi }",
+    "  }",
+    "  group rack \"ラック\" {",
+    "    device sw \"ATEM\" as switcher { in 1 : sdi }",
+    "  }",
+    "}",
+    "",
+    "cam.SDI -> sw.1 : sdi 30m \"V-01\""
   ]
 }
