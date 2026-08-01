@@ -25,6 +25,16 @@ export type Block =
    * from the page that claims to list them.
    */
   | { kind: 'vocabulary'; of: 'signals' | 'kinds' | 'colours' | 'units' | 'themes' }
+  /**
+   * A schedule the example actually produces, computed at build time.
+   *
+   * Much of what the language decides is invisible in the drawing. Whether a moulded tail
+   * counts as a cable, whether a part is listed once or twice — none of it changes the
+   * picture, and all of it changes the lists somebody packs a van from. A page arguing
+   * about that has to print the real table, or it is arguing about nothing the reader can
+   * check.
+   */
+  | { kind: 'schedule'; name: string; of: 'cable' | 'parts' | 'equipment' }
   | { kind: 'note'; text: string };
 
 export interface Section {

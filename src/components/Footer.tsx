@@ -30,6 +30,9 @@ export function Footer({
         <a className="mono" href={`/${lang}/docs`}>
           {t.nav.docs}
         </a>
+        <a className="mono" href={`/${lang}/examples`}>
+          {t.nav.examples}
+        </a>
         <a className="mono" href="https://github.com/Love-Rox/kumihimo">
           GitHub
         </a>

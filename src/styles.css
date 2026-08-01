@@ -898,6 +898,40 @@ kbd {
   max-width: none;
 }
 
+/* The one line under a recipe heading that says what the answer turns on. Set apart from
+   the body so someone scanning for their own problem can skip an entry without reading
+   its code. */
+.recipe__gist {
+  max-width: var(--measure);
+  color: var(--color-muted);
+  font-size: var(--text-lg);
+  line-height: 1.5;
+}
+
+/* A schedule the example actually produced. */
+.sched {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.sched__title {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* An empty schedule is drawn rather than skipped: "nothing here" is often the whole
+   point, and leaving the table out would hide the claim being made. */
+.sched__empty {
+  padding: var(--space-sm) var(--space-md);
+  border: var(--rule-hair) dashed var(--color-rule);
+  border-radius: var(--radius-md);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
 /* Inline code inside running text. Distinct from .code, which is a whole block. */
 .tok {
   padding: 1px var(--space-2xs);
