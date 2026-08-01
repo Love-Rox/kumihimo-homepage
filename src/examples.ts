@@ -121,7 +121,7 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           {
             kind: 'note',
-            text: '結線では `sw.(1..4)` という範囲の書き方は使えません。宣言と結線で書き方が違うのは今のところそういうものです。',
+            text: '結線では `sw.(1..4)` という範囲の書き方は使えません。**これは意図的です。** 口の並びは連番であることが多いので宣言では範囲が便利ですが、結線を範囲で書くと、片側の口が1つずれただけで**黙って全部が1つずれた結線になります**。図は正しく描かれ、表も正しく出て、現場で挿すまで誰も気づきません。並べて書けば、数が合わないことがその場でわかります。',
           },
         ],
       },
@@ -206,6 +206,49 @@ export const EXAMPLES: Record<Lang, Examples> = {
         ],
       },
       {
+        id: 'split',
+        title: 'TRRS を TRS 2本に分ける',
+        gist: '同じ形の物が2通りあります。分かれ目は結線に長さを書いたかどうかだけです。',
+        blocks: [
+          {
+            kind: 'p',
+            text: '**1本のケーブルとして**書く場合。ヘッドセット分岐のように、TRRS のプラグから2本の尻尾が生えている物です。',
+          },
+          { kind: 'diagram', name: 'exSplitLead', filename: 'splitter-lead.khm' },
+          { kind: 'schedule', name: 'exSplitLead', of: 'cable' },
+          { kind: 'schedule', name: 'exSplitLead', of: 'parts' },
+          {
+            kind: 'p',
+            text: '**結線には何も書きません。** `: trrs35` `: trs35` だけです。長さもケーブル番号も付けない。書いた瞬間そこは**ソケット**になり、「別途ケーブルが要る」という意味に変わります。1本なので書きません。長さと番号は `as cable` のうしろに、**物として1つ**だけ付けます。',
+          },
+          {
+            kind: 'p',
+            text: '次は**差し込み口がある分岐アダプタ**として書く場合。宣言はほとんど同じです。',
+          },
+          { kind: 'diagram', name: 'exSplitPanel', filename: 'splitter-panel.khm' },
+          { kind: 'schedule', name: 'exSplitPanel', of: 'cable' },
+          { kind: 'schedule', name: 'exSplitPanel', of: 'parts' },
+          {
+            kind: 'table',
+            head: ['', '1本のケーブル', '分岐アダプタ'],
+            rows: [
+              ['`as cable "A-01"`', '**付ける**', '付けない'],
+              ['各結線の長さ・番号', '書かない', '**書く**'],
+              ['ケーブル表', '1行', '2行'],
+              ['部材表', '空', '1個'],
+            ],
+          },
+          {
+            kind: 'p',
+            text: '**変えたのは2か所だけ**です。どちらも PC 側には何も書いていないので、TRRS のプラグが生えている点は共通しています。分岐アダプタの側で部材表の「つながる先」にノートPC が入っているのはそのためです。',
+          },
+          {
+            kind: 'note',
+            text: '現場での判断はこれだけです — **その口に別のケーブルを挿すか**。挿すなら長さか番号を書く、挿さないなら書かない。',
+          },
+        ],
+      },
+      {
         id: 'wireless',
         title: 'ワイヤレスマイクを書く',
         gist: '無線の信号型を使えば、線ではなく波として描かれます。',
@@ -216,9 +259,14 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           { kind: 'diagram', name: 'wireless', filename: 'wireless.khm' },
           { kind: 'schedule', name: 'wireless', of: 'cable' },
+          { kind: 'schedule', name: 'wireless', of: 'wireless' },
           {
             kind: 'p',
-            text: '無線区間はケーブル表に出ますが、長さの欄にはチャンネルが入ります。**受信機から卓までの XLR は別の1本**で、そちらは普通に長さと番号を持ちます。',
+            text: '**2枚に分かれます。** ケーブル表に出るのは受信機から卓までの XLR 1本だけで、電波の区間は無線表です。長さもコネクタも巻くものも無い行がケーブル表にあると、**測り忘れたケーブル**に見えてしまうためです。',
+          },
+          {
+            kind: 'note',
+            text: '2枚は別の人が別のものを探して読みます。**届く長さがあるか**と、**同じチャンネルが2系統で重なっていないか**です。',
           },
         ],
       },
@@ -233,9 +281,14 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           { kind: 'diagram', name: 'exOver', filename: 'over.khm' },
           { kind: 'schedule', name: 'exOver', of: 'cable' },
+          { kind: 'schedule', name: 'exOver', of: 'wireless' },
           {
             kind: 'p',
-            text: '**乗り物が物理を決めます。** `over wifi` の区間はコネクタを持たず、チャンネルを持ちます。`over lan` の区間は RJ45 で、長さと番号を持ちます。**名前と色は中身の NDI が決めます。**',
+            text: '**乗り物が物理を決めます。** 同じ NDI が2枚に分かれました。`over wifi` の区間は無線表で、コネクタを持たずチャンネルを持ちます。`over lan` の区間はケーブル表で、RJ45 と長さと番号を持ちます。**中身が同じでも乗り物で行き先が変わる**のが、`over` の効き方そのものです。',
+          },
+          {
+            kind: 'p',
+            text: '無線表の**乗り物**の欄には `Wi-Fi` が入ります。**名前は中身のもの、周波数は乗り物のもの**なので、列が分かれています。前の項のワイヤレスマイクではこの欄が空でした。`uhf` は自分自身の乗り物で、「UHF が UHF に乗っている」とは書く意味がないからです。',
           },
           {
             kind: 'note',
@@ -466,7 +519,7 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           {
             kind: 'note',
-            text: 'A connection will not take `sw.(1..4)`. Declarations and connections differ here, as things stand.',
+            text: 'A connection will not take `sw.(1..4)`, and that is **deliberate**. Sockets usually are numbered in a row, so a range earns its place in a declaration. A range in a *connection* means one socket out of step silently wires **everything** one out of step: the drawing comes out right, the schedules come out right, and nobody finds out until they are plugging it in. Listed out, a count that does not match is visible where it is written.',
           },
         ],
       },
@@ -551,6 +604,49 @@ export const EXAMPLES: Record<Lang, Examples> = {
         ],
       },
       {
+        id: 'split',
+        title: 'Split a TRRS into two TRS',
+        gist: 'Two objects of the same shape. What separates them is whether the runs carry a length.',
+        blocks: [
+          {
+            kind: 'p',
+            text: 'First as **one cable** — a headset splitter, where two tails come off the TRRS plug.',
+          },
+          { kind: 'diagram', name: 'exSplitLead', filename: 'splitter-lead.khm' },
+          { kind: 'schedule', name: 'exSplitLead', of: 'cable' },
+          { kind: 'schedule', name: 'exSplitLead', of: 'parts' },
+          {
+            kind: 'p',
+            text: '**The runs carry nothing** — just `: trrs35` and `: trs35`. No length, no cable number. Writing one makes that end a **socket**, which means "and a separate cable to reach it". This is one object, so nothing is written. The length and the number go after `as cable`, **once, for the object**.',
+          },
+          {
+            kind: 'p',
+            text: 'Now the same shape as a **splitter with sockets**. The declaration is almost identical.',
+          },
+          { kind: 'diagram', name: 'exSplitPanel', filename: 'splitter-panel.khm' },
+          { kind: 'schedule', name: 'exSplitPanel', of: 'cable' },
+          { kind: 'schedule', name: 'exSplitPanel', of: 'parts' },
+          {
+            kind: 'table',
+            head: ['', 'One cable', 'A splitter'],
+            rows: [
+              ['`as cable "A-01"`', '**yes**', 'no'],
+              ['Length/number on each run', 'no', '**yes**'],
+              ['Cable schedule', '1 row', '2 rows'],
+              ['Parts list', 'empty', '1'],
+            ],
+          },
+          {
+            kind: 'p',
+            text: '**Two changes, and that is all.** Neither writes anything on the PC side, so in both readings the TRRS plug is moulded on — which is why the laptop appears among what the splitter reaches on the parts list.',
+          },
+          {
+            kind: 'note',
+            text: 'The decision on site is only this: **does something plug into that end**. If it does, give the run a length or a number. If it does not, write neither.',
+          },
+        ],
+      },
+      {
         id: 'wireless',
         title: 'A radio mic',
         gist: 'A wireless signal type draws as a wave, not a line.',
@@ -561,9 +657,14 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           { kind: 'diagram', name: 'wireless', filename: 'wireless.khm' },
           { kind: 'schedule', name: 'wireless', of: 'cable' },
+          { kind: 'schedule', name: 'wireless', of: 'wireless' },
           {
             kind: 'p',
-            text: 'The radio hop appears on the schedule with its channel where a length would go. **The XLR from receiver to desk is a separate cable**, with an ordinary length and number.',
+            text: '**Two sheets.** The cable schedule has only the XLR from receiver to desk; the hop through the air is on the wireless one. A row with no length, no connector and nothing to coil, sitting among the cables, reads as **a cable nobody measured**.',
+          },
+          {
+            kind: 'note',
+            text: 'The two are read by different people looking for different things: **enough cable to reach**, against **two paths on one channel**.',
           },
         ],
       },
@@ -578,9 +679,14 @@ export const EXAMPLES: Record<Lang, Examples> = {
           },
           { kind: 'diagram', name: 'exOver', filename: 'over.khm' },
           { kind: 'schedule', name: 'exOver', of: 'cable' },
+          { kind: 'schedule', name: 'exOver', of: 'wireless' },
           {
             kind: 'p',
-            text: '**The carrier decides the physics.** An `over wifi` hop has no connector and takes a channel. An `over lan` run is RJ45 and takes a length and a number. **The name and the colour come from the NDI.**',
+            text: '**The carrier decides the physics** — and here the same NDI has landed on two different sheets. The `over wifi` hop is on the wireless one, with no connector and a channel. The `over lan` run is on the cable one, RJ45 with a length and a number. **One payload, sorted by what carries it**, which is `over` working exactly as it says.',
+          },
+          {
+            kind: 'p',
+            text: 'The **over** column reads `Wi-Fi`: **the name belongs to the payload and the frequency to the carrier**, which is why they are separate columns. In the radio mic above that column was empty — `uhf` is its own carrier, and "riding on itself" is not worth writing down.',
           },
           {
             kind: 'note',

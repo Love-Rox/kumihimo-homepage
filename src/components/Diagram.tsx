@@ -27,17 +27,22 @@ type Props = {
 
 /** Minimal highlighter for the token classes the stylesheet defines. */
 function highlight(source: string): string {
-  return source
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/(#[^\n]*)/g, '<span class="c">$1</span>')
-    .replace(/("[^"\n]*")/g, '<span class="s">$1</span>')
-    .replace(
-      /\b(diagram|device|adapter|group|model|signal|compat|use|in|out|io|as|from|over|via|gap)\b/g,
-      '<span class="k">$1</span>',
-    )
-    .replace(/(-&gt;|&lt;-&gt;|--)/g, '<span class="n">$1</span>');
+  const escaped = source.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  // One pass, and one pass only. As a chain of `.replace` calls this ate itself: comments
+  // were wrapped first, and the string rule then found the `"c"` inside the `class="c"`
+  // it had just written and wrapped *that*, so every commented line rendered with `"c">`
+  // sitting in front of the comment. Alternation consumes each character once, which also
+  // stops a keyword inside a quoted name from being coloured as a keyword.
+  return escaped.replace(
+    /(#[^\n]*)|("[^"\n]*")|\b(diagram|device|adapter|group|model|signal|compat|use|in|out|io|as|from|over|via|gap)\b|(-&gt;|&lt;-&gt;|--)/g,
+    (_whole, comment?: string, text?: string, keyword?: string, arrow?: string) => {
+      if (comment !== undefined) return `<span class="c">${comment}</span>`;
+      if (text !== undefined) return `<span class="s">${text}</span>`;
+      if (keyword !== undefined) return `<span class="k">${keyword}</span>`;
+      return `<span class="n">${arrow}</span>`;
+    },
+  );
 }
 
 /**
