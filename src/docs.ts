@@ -236,6 +236,15 @@ export const DOCS: Record<Lang, Docs> = {
             text: '場所・ラック・サブシステムを枠で囲みます。入れ子は v0.1 では1段までです。',
           },
           { kind: 'diagram', name: 'docsGroup', filename: 'group.khm' },
+          {
+            kind: 'p',
+            text: '`group` は `group` を入れられます。会場の中にステージとラックがあり、ステージの中にカメラがある。**現場を歩く人にとってはどちらの階層も実在し**、箱が実際に置かれている場所を指すのは一番内側です。',
+          },
+          { kind: 'diagram', name: 'docsNested', filename: 'nested.khm' },
+          {
+            kind: 'note',
+            text: '機材が属するのは、それが書かれた `group` であって親ではありません。機材表に出るのは一番内側の名前です。人が歩いていく先がそこだからです。',
+          },
         ],
       },
       {
@@ -381,6 +390,74 @@ export const DOCS: Record<Lang, Docs> = {
           {
             kind: 'p',
             text: '受信機を通さずマイクを卓へ直結すれば、そこで指摘が出ます。無線と有線の境界も判定の対象です。',
+          },
+        ],
+      },
+      {
+        id: 'over',
+        title: '何かに乗っている信号',
+        blocks: [
+          {
+            kind: 'p',
+            text: 'NDI は映像ですが、線を流れているのは Ethernet です。無線 LAN なら電波です。**図が語りたいのは NDI で、物理を決めるのは Ethernet や WiFi** — `over` はこの2つを分けて書きます。',
+          },
+          { kind: 'diagram', name: 'exOver', filename: 'over.khm' },
+          {
+            kind: 'p',
+            text: '**乗り物が物理を決めます。** `over wifi` の区間はコネクタを持たずチャンネルを持ち、無線表に出ます。`over lan` の区間は RJ45 で長さと番号を持ち、ケーブル表に出ます。**名前と色は中身が決めます。**',
+          },
+          { kind: 'schedule', name: 'exOver', of: 'cable' },
+          { kind: 'schedule', name: 'exOver', of: 'wireless' },
+          {
+            kind: 'note',
+            text: '`over` を書かなければ、信号は自分自身の乗り物です。これまでどおりの動きになります。',
+          },
+        ],
+      },
+      {
+        id: 'connector',
+        title: '箱に付いているコネクタ',
+        blocks: [
+          {
+            kind: 'p',
+            text: '信号種別が複数のコネクタを持つとき、口はどれが付いているかを書けます。**性別はケーブルの性質ではなく、機器の口の性質**だからです。',
+          },
+          { kind: 'diagram', name: 'docsConnector', filename: 'connector.khm' },
+          {
+            kind: 'p',
+            text: '**ケーブルの端は導かれます。** プラグは逆の性別と噛み合うので、オスの出力にはメスの端が来ます。口に1回書けば、そこに届くすべてのケーブルが自動的に一致します。',
+          },
+          { kind: 'schedule', name: 'docsConnector', of: 'cable' },
+          {
+            kind: 'note',
+            text: '`xlr` は組み込みで唯一、コネクタ欄が**対**である型です。他は「どれか」の意味で、`usb` は A か B か C。対でない型ではケーブル端は逆ではなく同じ名前になります。',
+          },
+        ],
+      },
+      {
+        id: 'cable-parts',
+        title: '成型ケーブルと、長さ未定',
+        blocks: [
+          {
+            kind: 'p',
+            text: '尻尾が全部成型された分岐ケーブルは、**部材であると同時にケーブル**です。van に積まれ、番号が振られ、積む人が見るのはケーブル表です。`as cable` を足すと部材表ではなくケーブル表に出ます。',
+          },
+          { kind: 'diagram', name: 'exMoulded', filename: 'moulded.khm' },
+          { kind: 'schedule', name: 'exMoulded', of: 'cable' },
+          { kind: 'schedule', name: 'exMoulded', of: 'adapter' },
+          {
+            kind: 'p',
+            text: '**1個の物が1行**です。プラグごとに3行にはなりません。部材表からは外れるので二重に数えられません。`as cable` のうしろには結線と同じく長さとケーブル番号を書けます。',
+          },
+          {
+            kind: 'p',
+            text: '長さがまだ決まっていないときは `?m` と書きます。長さを省くこともできますが、その空欄は**「まだ測っていない」と「誰も考えていない」**の2つを同時に意味します。van に積む人が見る表では、片方だけが残っている仕事です。',
+          },
+          { kind: 'diagram', name: 'exUnknown', filename: 'unknown.khm' },
+          { kind: 'schedule', name: 'exUnknown', of: 'cable' },
+          {
+            kind: 'note',
+            text: '単位は書きます。**どの単位で測るかは未定の対象ではない**からです。`?m` `?ft` など、この言語が知っている単位すべてが使えます。',
           },
         ],
       },
@@ -667,6 +744,15 @@ export const DOCS: Record<Lang, Docs> = {
             text: 'A frame around a location, a rack or a subsystem. Nesting is one level in v0.1.',
           },
           { kind: 'diagram', name: 'docsGroup', filename: 'group.khm' },
+          {
+            kind: 'p',
+            text: 'A `group` can hold another `group`. A venue holds a stage and a rack; the stage holds the cameras. **Both levels are real to whoever walks the site**, and only the innermost one names the place a box is actually standing in.',
+          },
+          { kind: 'diagram', name: 'docsNested', filename: 'nested.khm' },
+          {
+            kind: 'note',
+            text: 'A device belongs to the group it is written in, not to that group’s parent. The equipment list names the innermost one, because that is the shelf somebody walks to.',
+          },
         ],
       },
       {
@@ -809,6 +895,74 @@ export const DOCS: Record<Lang, Docs> = {
           {
             kind: 'p',
             text: 'Wire a microphone straight into the desk with no receiver and you get told. The boundary between wireless and wired is judged too.',
+          },
+        ],
+      },
+      {
+        id: 'over',
+        title: 'A signal riding on something else',
+        blocks: [
+          {
+            kind: 'p',
+            text: 'NDI is video, but what flows down the wire is Ethernet — or, over Wi-Fi, radio. **The drawing is about the NDI; the physics belongs to the Ethernet or the Wi-Fi.** `over` keeps the two apart.',
+          },
+          { kind: 'diagram', name: 'exOver', filename: 'over.khm' },
+          {
+            kind: 'p',
+            text: '**The carrier decides the physics.** An `over wifi` hop has no connector, takes a channel, and lands on the wireless schedule. An `over lan` run is RJ45, takes a length and a number, and lands on the cable one. **The name and the colour come from the payload.**',
+          },
+          { kind: 'schedule', name: 'exOver', of: 'cable' },
+          { kind: 'schedule', name: 'exOver', of: 'wireless' },
+          {
+            kind: 'note',
+            text: 'Without `over`, a signal is its own carrier and everything behaves exactly as before.',
+          },
+        ],
+      },
+      {
+        id: 'connector',
+        title: 'Which connector is on the box',
+        blocks: [
+          {
+            kind: 'p',
+            text: 'Where a signal type offers a choice, a port can say which one it has. **Gender is a property of the socket, not of the cable.**',
+          },
+          { kind: 'diagram', name: 'docsConnector', filename: 'connector.khm' },
+          {
+            kind: 'p',
+            text: '**The cable ends follow.** A plug mates with the opposite gender, so a male output takes a female cable end. Written once per socket, every cable reaching that socket agrees with it.',
+          },
+          { kind: 'schedule', name: 'docsConnector', of: 'cable' },
+          {
+            kind: 'note',
+            text: '`xlr` is the only builtin whose connector list is a **mating pair**. Everywhere else the list means "one of these" — `usb` is A or B or C — and there the cable end is the same name rather than an opposite.',
+          },
+        ],
+      },
+      {
+        id: 'cable-parts',
+        title: 'Moulded leads, and a length still to come',
+        blocks: [
+          {
+            kind: 'p',
+            text: 'A fan-out whose tails are all moulded is **a part and a cable at once**. It goes in the van, it gets a number, and the person loading reads the cable schedule. `as cable` puts it there instead of on the parts list.',
+          },
+          { kind: 'diagram', name: 'exMoulded', filename: 'moulded.khm' },
+          { kind: 'schedule', name: 'exMoulded', of: 'cable' },
+          { kind: 'schedule', name: 'exMoulded', of: 'adapter' },
+          {
+            kind: 'p',
+            text: '**One object, one row** — not one per plug. It leaves the parts list, so it is not counted twice. `as cable` takes a length and a cable number, the same ones a run takes.',
+          },
+          {
+            kind: 'p',
+            text: 'Where the length is not settled yet, write `?m`. Leaving it off already worked, and the blank it produced meant **"not measured" and "nobody thought about it"** at once. On a list somebody packs a van from, only one of those is a job still to do.',
+          },
+          { kind: 'diagram', name: 'exUnknown', filename: 'unknown.khm' },
+          { kind: 'schedule', name: 'exUnknown', of: 'cable' },
+          {
+            kind: 'note',
+            text: 'The unit is still written, because **which unit it will be measured in is not the open question**. `?m`, `?ft`, and any other unit the language knows.',
           },
         ],
       },
