@@ -33,6 +33,7 @@ export interface Copy {
     editor: string;
     vscode: string;
     search: string;
+    menu: string;
   };
 
   hero: {
@@ -106,6 +107,7 @@ export const COPY: Record<Lang, Copy> = {
       examples: '記述例',
       editor: '試す',
       search: '検索・移動',
+      menu: 'メニュー',
     },
 
     hero: {
@@ -233,6 +235,7 @@ export const COPY: Record<Lang, Copy> = {
       examples: 'Recipes',
       editor: 'Try it',
       search: 'Search',
+      menu: 'Menu',
     },
 
     hero: {

@@ -115,6 +115,8 @@ export function Nav({
   const [query, setQuery] = useState('');
   const [active, setActive] = useState(0);
   const input = useRef<HTMLInputElement>(null);
+  /** Whether the palette was opened from the keyboard, which is what earns the caret. */
+  const typed = useRef(false);
   const opener = useRef<HTMLElement | null>(null);
 
   const matches = commands.filter((c) =>
@@ -134,6 +136,7 @@ export function Nav({
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
         opener.current = document.activeElement as HTMLElement;
+        typed.current = true;
         setOpen((was) => !was);
       }
       if (event.key === 'Escape') close();
@@ -148,7 +151,7 @@ export function Nav({
       return;
     }
     document.body.style.overflow = 'hidden';
-    input.current?.focus();
+    if (typed.current) input.current?.focus();
   }, [open]);
 
   const go = useCallback(
@@ -200,17 +203,31 @@ export function Nav({
             <a className="nav__link" href={other}>
               {t.otherLangLabel}
             </a>
+            {/* The only way to the rest of the site once the links collapse, so below that
+                width it has to look like a menu rather than a keyboard shortcut. Same
+                button, same panel — a phone cannot press ⌘K, and a bare "⌘ K" pill reads
+                as decoration. */}
             <button
               type="button"
               className="searchpill"
-              aria-label={`${t.nav.search} (⌘K)`}
+              aria-label={`${t.nav.menu} · ${t.nav.search} (⌘K)`}
+              aria-expanded={open}
               onClick={(event) => {
                 opener.current = event.currentTarget;
+                // Only a keyboard opening should take the caret. On a phone, autofocus
+                // raises the on-screen keyboard over the list the tap was reaching for.
+                typed.current = false;
                 setOpen(true);
               }}
             >
+              <span className="searchpill__bars" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
               <span className="searchpill__text">{t.nav.search}</span>
-              <span>
+              <span className="searchpill__menu">{t.nav.menu}</span>
+              <span className="searchpill__keys">
                 <kbd>⌘</kbd> <kbd>K</kbd>
               </span>
             </button>
