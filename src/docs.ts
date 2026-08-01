@@ -233,7 +233,7 @@ export const DOCS: Record<Lang, Docs> = {
         blocks: [
           {
             kind: 'p',
-            text: '場所・ラック・サブシステムを枠で囲みます。入れ子は v0.1 では1段までです。',
+            text: '場所・ラック・サブシステムを枠で囲みます。',
           },
           { kind: 'diagram', name: 'docsGroup', filename: 'group.khm' },
           {
@@ -431,6 +431,27 @@ export const DOCS: Record<Lang, Docs> = {
           {
             kind: 'note',
             text: '`xlr` は組み込みで唯一、コネクタ欄が**対**である型です。他は「どれか」の意味で、`usb` は A か B か C。対でない型ではケーブル端は逆ではなく同じ名前になります。',
+          },
+          {
+            kind: 'p',
+            text: '**殻の大小はコネクタであって、型ではありません。** カメラは micro HDMI、スイッチャーはフルサイズ、あいだのケーブルは何も変換していません。だから `hdmi` が3つとも持ちます。型を分ければ、成立している接続に不一致が出てしまいます。',
+          },
+          { kind: 'diagram', name: 'docsShell', filename: 'shell.khm' },
+          {
+            kind: 'p',
+            text: '書く価値は表にあります。`HDMI Micro → HDMI` は `HDMI → HDMI` とは別のケーブルで、持って来たか来なかったかのどちらかです。`DisplayPort Mini`、`USB Micro-B`、`DIN 1.0/2.3`、3.5mm の MIDI、ボディパックの Mini XLR も同じです。',
+          },
+          { kind: 'schedule', name: 'docsShell', of: 'cable' },
+          {
+            kind: 'p',
+            text: '**殻を変えるだけの小物は `adapter` です。** こう書けばケーブルはふつうの HDMI-HDMI に戻り、アダプタは資材表に1個だけ載ります。なくせる部品はそちらに載るのが正しい書類です。',
+          },
+          { kind: 'diagram', name: 'docsShellAdapter', filename: 'shell-adapter.khm' },
+          { kind: 'schedule', name: 'docsShellAdapter', of: 'cable' },
+          { kind: 'schedule', name: 'docsShellAdapter', of: 'adapter' },
+          {
+            kind: 'note',
+            text: '空白を含む値は引用符で囲みます: `[connector="HDMI Micro"]`。殻の名前はたいてい空白を含みます。',
           },
         ],
       },
@@ -741,7 +762,7 @@ export const DOCS: Record<Lang, Docs> = {
         blocks: [
           {
             kind: 'p',
-            text: 'A frame around a location, a rack or a subsystem. Nesting is one level in v0.1.',
+            text: 'A frame around a location, a rack or a subsystem.',
           },
           { kind: 'diagram', name: 'docsGroup', filename: 'group.khm' },
           {
@@ -936,6 +957,27 @@ export const DOCS: Record<Lang, Docs> = {
           {
             kind: 'note',
             text: '`xlr` is the only builtin whose connector list is a **mating pair**. Everywhere else the list means "one of these" — `usb` is A or B or C — and there the cable end is the same name rather than an opposite.',
+          },
+          {
+            kind: 'p',
+            text: '**A smaller shell is a connector, not a type.** A camera has micro HDMI, a switcher has full size, and the lead between them converts nothing — so `hdmi` carries all three rather than splitting into three signals. Splitting them would report a mismatch on a connection that works.',
+          },
+          { kind: 'diagram', name: 'docsShell', filename: 'shell.khm' },
+          {
+            kind: 'p',
+            text: 'The reason to write it is the schedule. `HDMI Micro → HDMI` is a different lead from `HDMI → HDMI`, and it is one you either packed or did not. The same goes for `DisplayPort Mini`, `USB Micro-B`, `DIN 1.0/2.3`, MIDI on `TRS 3.5mm`, and mini XLR on a bodypack.',
+          },
+          { kind: 'schedule', name: 'docsShell', of: 'cable' },
+          {
+            kind: 'p',
+            text: '**A part that only changes the shell is an `adapter`.** Then the cable goes back to being an ordinary HDMI-to-HDMI, and the adapter is counted once on the parts list — which is where a thing that can be lost belongs.',
+          },
+          { kind: 'diagram', name: 'docsShellAdapter', filename: 'shell-adapter.khm' },
+          { kind: 'schedule', name: 'docsShellAdapter', of: 'cable' },
+          { kind: 'schedule', name: 'docsShellAdapter', of: 'adapter' },
+          {
+            kind: 'note',
+            text: 'A value with a space in it goes in quotes: `[connector="HDMI Micro"]`. Most shell names have one.',
           },
         ],
       },

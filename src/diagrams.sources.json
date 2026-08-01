@@ -230,6 +230,20 @@
     "",
     "dk.CH1 -> sp.IN : xlr 10m \"A-01\""
   ],
+  "docsShell": [
+    "device cam \"SONY α7 IV\" as camera   { out HDMI  : hdmi [connector=\"HDMI Micro\"] }",
+    "device sw  \"ATEM Mini\"  as switcher { in  HDMI1 : hdmi [connector=HDMI] }",
+    "",
+    "cam.HDMI -> sw.HDMI1 : hdmi 3m \"V-01\""
+  ],
+  "docsShellAdapter": [
+    "device cam \"SONY α7 IV\" as camera   { out HDMI  : hdmi [connector=\"HDMI Micro\"] }",
+    "adapter mh \"micro-HDMI 変換アダプタ\" { in IN : hdmi [connector=\"HDMI Micro\"]  out OUT : hdmi [connector=HDMI] }",
+    "device sw  \"ATEM Mini\"  as switcher { in  HDMI1 : hdmi [connector=HDMI] }",
+    "",
+    "cam.HDMI -> mh.IN    : hdmi",
+    "mh.OUT   -> sw.HDMI1 : hdmi 3m \"V-01\""
+  ],
   "docsNested": [
     "diagram \"会場\" { direction: LR }",
     "",

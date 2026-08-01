@@ -96,7 +96,15 @@ function Diagnostics({ name, lang }: { name: string; lang: Lang }) {
  */
 function headings(kind: 'cable' | 'wireless' | 'adapter' | 'equipment', lang: Lang): string[] {
   const wanted: Record<string, string[]> = {
-    cable: ['label', 'fromDevice', 'toDevice', 'signalLabel', 'length', 'connectors'],
+    cable: [
+      'label',
+      'fromDevice',
+      'toDevice',
+      'signalLabel',
+      'length',
+      'fromConnector',
+      'toConnector',
+    ],
     wireless: ['label', 'fromDevice', 'toDevice', 'signalLabel', 'carrierLabel', 'frequency'],
     adapter: ['adapter', 'count', 'links'],
     equipment: ['label', 'kind', 'group', 'ports'],
@@ -142,7 +150,8 @@ function Schedule({ name, of, lang }: { name: string; of: string; lang: Lang }) 
       row.to,
       row.signal,
       row.length || '—',
-      row.connectors || (ja ? 'コネクタなし' : 'none'),
+      row.fromConnector || '—',
+      row.toConnector || '—',
     ];
   });
 
