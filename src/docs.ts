@@ -34,7 +34,7 @@ export type Block =
    * about that has to print the real table, or it is arguing about nothing the reader can
    * check.
    */
-  | { kind: 'schedule'; name: string; of: 'cable' | 'wireless' | 'parts' | 'equipment' }
+  | { kind: 'schedule'; name: string; of: 'cable' | 'wireless' | 'adapter' | 'equipment' }
   | { kind: 'note'; text: string };
 
 export interface Section {

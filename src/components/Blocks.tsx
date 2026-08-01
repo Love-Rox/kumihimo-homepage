@@ -12,6 +12,8 @@ import type { ReactNode } from 'react';
 import type { Lang } from '../copy';
 import type { Block } from '../docs';
 import built from '../generated/diagrams.json';
+import { SCHEDULES, localise } from '@love-rox/kumihimo-core';
+
 import { VOCABULARY, categories, signalsOf } from '../vocabulary';
 import { Diagram } from './Diagram';
 
@@ -82,33 +84,29 @@ function Diagnostics({ name, lang }: { name: string; lang: Lang }) {
   );
 }
 
-const SCHEDULE_HEADS: Record<string, Record<Lang, string[]>> = {
-  cable: {
-    ja: ['番号', 'から', 'へ', '信号', '長さ', 'コネクタ'],
-    en: ['No.', 'From', 'To', 'Signal', 'Length', 'Connectors'],
-  },
-  // No length and no connector column, because a radio path has neither. What it has is a
-  // channel somebody has to co-ordinate, and what it is riding on when `over` said so.
-  wireless: {
-    ja: ['番号', 'から', 'へ', '信号', '乗り物', 'チャンネル'],
-    en: ['No.', 'From', 'To', 'Signal', 'Over', 'Channel'],
-  },
-  parts: {
-    ja: ['部材', '数', 'つながる先'],
-    en: ['Part', 'Qty', 'Between'],
-  },
-  equipment: {
-    ja: ['機材', '種別', 'グループ', 'ポート'],
-    en: ['Device', 'Kind', 'Group', 'Ports'],
-  },
-};
-
-const SCHEDULE_TITLES: Record<string, Record<Lang, string>> = {
-  cable: { ja: 'ケーブル表', en: 'Cable schedule' },
-  wireless: { ja: '無線表', en: 'Wireless schedule' },
-  parts: { ja: '部材表', en: 'Parts list' },
-  equipment: { ja: '機材表', en: 'Equipment list' },
-};
+/**
+ * The headings, from the compiler.
+ *
+ * These were written out here, and drifted: the schedules moved into a registry so that
+ * four surfaces would stop keeping their own copies, and this page went on keeping one.
+ * `から` and `へ` survived a rename to `送出` and `受け` that everything else had.
+ *
+ * The page shows fewer columns than the registry lists — a spreadsheet export wants the
+ * port ids and a web page does not — so it picks by key rather than taking the lot.
+ */
+function headings(kind: 'cable' | 'wireless' | 'adapter' | 'equipment', lang: Lang): string[] {
+  const wanted: Record<string, string[]> = {
+    cable: ['label', 'fromDevice', 'toDevice', 'signalLabel', 'length', 'connectors'],
+    wireless: ['label', 'fromDevice', 'toDevice', 'signalLabel', 'carrierLabel', 'frequency'],
+    adapter: ['adapter', 'count', 'links'],
+    equipment: ['label', 'kind', 'group', 'ports'],
+  };
+  const columns = SCHEDULES[kind].columns;
+  return (wanted[kind] ?? []).map((key) => {
+    const head = columns.find((column: { key: string }) => column.key === key)?.head;
+    return head === undefined ? key : localise(head, lang);
+  });
+}
 
 /**
  * A schedule the example produces, as the compiler produced it.
@@ -118,8 +116,9 @@ const SCHEDULE_TITLES: Record<string, Record<Lang, string>> = {
  * empty, and omitting the table would hide the claim being made.
  */
 function Schedule({ name, of, lang }: { name: string; of: string; lang: Lang }) {
-  const rows = built[key(name)][lang].schedules[of as 'cable' | 'wireless' | 'parts' | 'equipment'];
-  const head = SCHEDULE_HEADS[of]?.[lang] ?? [];
+  const rows =
+    built[key(name)][lang].schedules[of as 'cable' | 'wireless' | 'adapter' | 'equipment'];
+  const head = headings(of as 'cable' | 'wireless' | 'adapter' | 'equipment', lang);
   const ja = lang === 'ja';
 
   const cells = rows.map((row) => {
@@ -149,7 +148,9 @@ function Schedule({ name, of, lang }: { name: string; of: string; lang: Lang }) 
 
   return (
     <div className="sched">
-      <p className="sched__title mono">{SCHEDULE_TITLES[of]?.[lang] ?? of}</p>
+      <p className="sched__title mono">
+        {localise(SCHEDULES[of as 'cable' | 'wireless' | 'adapter' | 'equipment'].title, lang)}
+      </p>
       {cells.length === 0 ? (
         <p className="sched__empty">{ja ? '（空）' : '(empty)'}</p>
       ) : (
