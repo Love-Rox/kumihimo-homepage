@@ -40,6 +40,7 @@ function commandsFor(lang: Lang, otherHref: string): Command[] {
     },
     { group: groups.page, label: t.nav.editor, hint: 'live editor', href: `${home}#editor` },
     { group: groups.page, label: t.nav.vscode, hint: 'the extension', href: `${home}#vscode` },
+    { group: groups.page, label: t.nav.obsidian, hint: 'the plugin', href: `${home}#obsidian` },
     { group: groups.docs, label: t.nav.docs, hint: `${home}/docs`, href: `${home}/docs` },
     {
       group: groups.docs,

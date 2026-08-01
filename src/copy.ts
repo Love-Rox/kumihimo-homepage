@@ -32,6 +32,7 @@ export interface Copy {
     examples: string;
     editor: string;
     vscode: string;
+    obsidian: string;
     search: string;
     menu: string;
   };
@@ -71,6 +72,19 @@ export interface Copy {
     sample: Fault;
   };
 
+  obsidian: {
+    eyebrow: string;
+    title: string;
+    lede: string;
+    /** What the plugin does, one cell each. */
+    features: Note[];
+    /** The fenced block shown as the sample, and the caption above it. */
+    fence: string;
+    releases: string;
+    /** Where it stands with the community directory. */
+    status: string;
+  };
+
   install: { eyebrow: string; title: string; cliNote: string; mdNote: string };
 
   /** "Latest release", said once and used wherever a version is shown. */
@@ -103,6 +117,7 @@ export const COPY: Record<Lang, Copy> = {
       catches: '検出できるもの',
       playground: '書き方',
       vscode: 'VS Code',
+      obsidian: 'Obsidian',
       docs: 'ドキュメント',
       examples: '記述例',
       editor: '試す',
@@ -197,6 +212,34 @@ export const COPY: Record<Lang, Copy> = {
       },
     },
 
+    obsidian: {
+      eyebrow: 'OBSIDIAN',
+      title: 'ノートの中に、そのまま。',
+      lede: 'コードブロックがそのまま図になります。同じコンパイラが動くので、ノートに書いた図はどこでも同じように開けます。',
+      features: [
+        {
+          title: '書けば描かれる',
+          body: '```kumihimo のブロックが図になります。```khm でも同じです。',
+        },
+        {
+          title: '表も一緒に',
+          body: 'ケーブル表・無線表・機材表・部材表が、図の下に折りたたまれて付きます。現場に持っていく紙と同じ中身です。',
+        },
+        {
+          title: '間違いは指摘される',
+          body: '挿さるのに何も通らない結線は、図の下に理由つきで出ます。間違った図が載ったノートは、図の無いノートより悪いからです。',
+        },
+        {
+          title: 'スマホでも動く',
+          body: 'レイアウトエンジンが Worker を必要としないので、デスクトップ専用ではありません。',
+        },
+      ],
+      fence: '# ノートに書く',
+      releases: 'リリースを見る',
+      status:
+        'コミュニティプラグインへの掲載を申請中です。それまでは上のリリースから3ファイルを vault に置いて使えます。',
+    },
+
     install: {
       eyebrow: 'INSTALL',
       title: '入れて、書く。',
@@ -231,6 +274,7 @@ export const COPY: Record<Lang, Copy> = {
       catches: 'What it catches',
       playground: 'How it reads',
       vscode: 'VS Code',
+      obsidian: 'Obsidian',
       docs: 'Docs',
       examples: 'Recipes',
       editor: 'Try it',
@@ -329,6 +373,34 @@ export const COPY: Record<Lang, Copy> = {
         wire: 'ext.CAT → netsw.1',
         why: 'HDBaseT uses Cat cable and RJ45 but is not Ethernet. It does not go into a switch',
       },
+    },
+
+    obsidian: {
+      eyebrow: 'OBSIDIAN',
+      title: 'In the note itself.',
+      lede: 'A code block becomes the diagram it describes. The same compiler runs, so a diagram written in a note opens anywhere else unchanged.',
+      features: [
+        {
+          title: 'Write it, see it',
+          body: 'A ```kumihimo block becomes the drawing. ```khm does the same.',
+        },
+        {
+          title: 'The schedules too',
+          body: 'Cables, wireless, equipment and parts, folded up under the drawing — the same lists the job travels with.',
+        },
+        {
+          title: 'Faults are named',
+          body: 'A run that seats perfectly and carries nothing is reported under the drawing, with its reason. A note with a wrong diagram in it is worse than a note with none.',
+        },
+        {
+          title: 'Works on a phone',
+          body: 'The layout engine needs no worker, so this is not desktop-only.',
+        },
+      ],
+      fence: '# in a note',
+      releases: 'Releases',
+      status:
+        'Submitted to the community directory. Until it lands there, copy the three files from a release into your vault.',
     },
 
     install: {

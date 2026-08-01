@@ -26,7 +26,7 @@ type Props = {
 };
 
 /** Minimal highlighter for the token classes the stylesheet defines. */
-function highlight(source: string): string {
+export function highlight(source: string): string {
   const escaped = source.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
   // One pass, and one pass only. As a chain of `.replace` calls this ate itself: comments
