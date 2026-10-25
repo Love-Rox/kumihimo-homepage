@@ -1,3 +1,11 @@
 allowBuilds:
   esbuild: true
   workerd: true
+overrides:
+  # tinypool 2.1.0 は critical の脆弱性あり（GHSA-5gmw-xhrv-c9v3, GHSA-85c8-ppgw-ccpr）。
+  # oxfmt@0.45 が ^2.1.0 を求めるため、直った 2.1.2 以上に寄せる（同じメジャーの中）
+  'tinypool@^2': '^2.1.2'
+  # miniflare（wrangler・@cloudflare/vite-plugin が使う）が undici 7.29.1 を固定しているが、
+  # 7.30.1 未満に脆弱性あり（GHSA-4qv8-2p9j-2685, GHSA-f72v-6w45-q472, GHSA-xjj6-f33q-929c）。
+  # 上の部品を最新にしても直らないので、同じメジャーの中で直った版に寄せる
+  'undici@^7': '^7.30.1'
